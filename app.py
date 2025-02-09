@@ -347,7 +347,7 @@ body {
 </style>
 """, unsafe_allow_html=True)
 
-loading = false
+bool loading = false
 
 # --- Increment Visitor Count and Update Active Users ---
 visitor_count = increment_visitor_count()
