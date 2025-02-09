@@ -322,67 +322,69 @@ with tabs[1]:
     search_menu_mode()
 with tabs[2]:
     st.subheader("🤝 เกี่ยวกับผู้พัฒนา")
-    st.markdown("""
-        <style>
-        .about-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
-            padding: 20px 0;
-        }
-        .about-card {
-            background-color: #ffffff;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            width: 250px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-        .about-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 50%;
-            margin-bottom: 15px;
-        }
-        .about-card h3 {
-            font-size: 1.6rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .about-card p {
-            font-size: 1.3rem;
-            margin: 0;
-        }
-        </style>
-        
-        <div class="about-container">
-            <div class="about-card">
-                <img src="https://media-hosting.imagekit.io//1b3ed8f3573a4e71/IMG_20241011_135949_649.webp?Expires=1833623214&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=XkV2~CAZ1JL5DLoYHTK43-DH1HSmbcpRfZqqgUbS~YZHNtsgvL-UkoVf9iDz8-pZKNYsLqdyFOahcMiuMR1ao1FQiu3I2iqWiSmsoBiHOfr3OxBObD32WF30wS6NTbMCg7MmWPKCratj29lGI0fhN~33HlEnQ50hMnDRnH9CKvwY3tOWxM2sTNcwZ5J1Q1nP5wCAUwCCFaeNxJwFxCWLBdR268qhrfTxu9-pgodzqM1~Jv0bj3UTjx2i7IMm7eLjfU14x4aE9HUjTKrgvzsadlHSzJgYIyhQvetbRsEVPeIiiIz9aMo3YzK-JCz3CPMnoU-7aBLe5yLmVOEeHvMTIQ__" alt="นาย กัลปพฤกษ์ วิเชียรรัตน์">
-                <h3>นาย กัลปพฤกษ์ วิเชียรรัตน์</h3>
-                <p><em>ชั้น 6/13 เลขที่ 3</em></p>
-            </div>
+    if st.button("📜 เกี่ยวกับผู้พัฒนา", use_container_width=True):
+        with st.expander("🤝 พบกับทีมงาน", expanded=False):
+            st.markdown("""
+            <style>
+            .about-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 40px;
+                padding: 20px 0;
+            }
+            .about-card {
+                background-color: #ffffff;
+                border: 1px solid #dee2e6;
+                border-radius: 10px;
+                width: 250px;
+                padding: 20px;
+                text-align: center;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            }
+            .about-card img {
+                width: 100%;
+                height: auto;
+                border-radius: 50%;
+                margin-bottom: 15px;
+            }
+            .about-card h3 {
+                font-size: 1.6rem;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+            .about-card p {
+                font-size: 1.3rem;
+                margin: 0;
+            }
+            </style>
             
-            <div class="about-card">
-                <img src="https://media-hosting.imagekit.io//794cd2dd43b24aff/perth_tm2025_02_08_18_38_478aae62c6-a109-49ec-aef1-8152096b5149.jpg?Expires=1833622873&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=u9sNP10b88y78jCRRUyLwn3OeHhsL7C0QbvaOcjCmOSGCD69RWN6e08aV19Se-7mknqcTF~zU9~snvhpFExvNR9jMhDubAePljCWIhBzzbpsRsOQ5akdEMa9AXVUOuXIzFN-igpqs-g9t8y~TqJ6mOO7daYkGa~L6Pnp3~G47pI3yWS5DVZ5hXcSHK7GQmupabIkfaaM-67FPYu7wF96vGlfatkSqA5zzIUGeX0yc~3kzI7dlCzqzqaXRKng6upQ07299g0LwFv3LBRO22VffO1fZr82TxnXUdEPcfmci-esT9LH6JEKwRET2fRLklG~qBRLc8wnzS0RdyrYjXRhEA__" alt="นาย ธีราธร มุกดาเพชรรัตน์">
-                <h3>นาย ธีราธร มุกดาเพชรรัตน์</h3>
-                <p><em>ชั้น 6/13 เลขที่ 13</em></p>
+            <div class="about-container">
+                <div class="about-card">
+                    <img src="https://media-hosting.imagekit.io//1b3ed8f3573a4e71/IMG_20241011_135949_649.webp?Expires=1833623214&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=XkV2~CAZ1JL5DLoYHTK43-DH1HSmbcpRfZqqgUbS~YZHNtsgvL-UkoVf9iDz8-pZKNYsLqdyFOahcMiuMR1ao1FQiu3I2iqWiSmsoBiHOfr3OxBObD32WF30wS6NTbMCg7MmWPKCratj29lGI0fhN~33HlEnQ50hMnDRnH9CKvwY3tOWxM2sTNcwZ5J1Q1nP5wCAUwCCFaeNxJwFxCWLBdR268qhrfTxu9-pgodzqM1~Jv0bj3UTjx2i7IMm7eLjfU14x4aE9HUjTKrgvzsadlHSzJgYIyhQvetbRsEVPeIiiIz9aMo3YzK-JCz3CPMnoU-7aBLe5yLmVOEeHvMTIQ__" alt="นาย กัลปพฤกษ์ วิเชียรรัตน์">
+                    <h3>นาย กัลปพฤกษ์ วิเชียรรัตน์</h3>
+                    <p><em>ชั้น 6/13 เลขที่ 3</em></p>
+                </div>
+                
+                <div class="about-card">
+                    <img src="https://media-hosting.imagekit.io//794cd2dd43b24aff/perth_tm2025_02_08_18_38_478aae62c6-a109-49ec-aef1-8152096b5149.jpg?Expires=1833622873&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=u9sNP10b88y78jCRRUyLwn3OeHhsL7C0QbvaOcjCmOSGCD69RWN6e08aV19Se-7mknqcTF~zU9~snvhpFExvNR9jMhDubAePljCWIhBzzbpsRsOQ5akdEMa9AXVUOuXIzFN-igpqs-g9t8y~TqJ6mOO7daYkGa~L6Pnp3~G47pI3yWS5DVZ5hXcSHK7GQmupabIkfaaM-67FPYu7wF96vGlfatkSqA5zzIUGeX0yc~3kzI7dlCzqzqaXRKng6upQ07299g0LwFv3LBRO22VffO1fZr82TxnXUdEPcfmci-esT9LH6JEKwRET2fRLklG~qBRLc8wnzS0RdyrYjXRhEA__" alt="นาย ธีราธร มุกดาเพชรรัตน์">
+                    <h3>นาย ธีราธร มุกดาเพชรรัตน์</h3>
+                    <p><em>ชั้น 6/13 เลขที่ 13</em></p>
+                </div>
+                
+                <div class="about-card">
+                    <img src="https://media-hosting.imagekit.io//e3962c8e8fa84567/513%2028.jpg?Expires=1833636651&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=IApvPc310iSHh~zIvIWoOHb-ABMcnPIPUmVAfVKHMQAz66kE1hCxbPUEWQNAIiekpZ1oDq9Nf8rmJ18AlAFtxzRAEOVGCXV1UWgz79A7kCvHHMbV1MnsOD2ZfY60ApLE-FRccfbKP3nLjaGZkcR3YA2ynywJVFHHau6MMA6mTUvy41nTWtRi9EDNP2Pbkxpr7hemhzcbtanbqtASvUHfWHspP5WXgJOXxq-TgoMYJudxvJbUsyp1Kg0WV1TOmo91xMgs5DC14xVXaE9lJ6NwfIG3zvoLehDiIXpYrGaI~nG~KUGXQJK~1st7lCdnkoLrCQhXJ55pGIOeIspbRj0LDQ__" alt="นาย อภิวิชญ์ อดุลธรรมวิทย์">
+                    <h3>นาย อภิวิชญ์ อดุลธรรมวิทย์</h3>
+                    <p><em>ชั้น 6/13 เลขที่ 28</em></p>
+                </div>
+                
+                <div class="about-card">
+                    <img src="https://media-hosting.imagekit.io//a39b45568dc14fab/IMG_20250208_223334.jpg?Expires=1833637018&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=M2tJAPHXihMl1OUnwNiEBpEggLW-AZag9HFNkFb51KiIR6AGcdJkV0ovnL0DfgAx8WV7-vc65vXWLKNZWoB4vzXob5AYUfwmT9XcgJ1egfOuS3B95GNj-y3maPQ7nm2iW3Yv~Zd5HfeL~D2tZu8CdiJUdFj3bB4x22uceD6zVNP8FHAuMS5qcaDTwUQgoV9RQvKQFOLjsX9JX7ZQ6olCkXmdIXM31uDSwok1Vpru12aC3p16whyHG2iJ2s1iTROwcJurWM9F-R90NCjP63ZGEa0gdrKgHC6WvKeGSmkehKsqpQv7fL3i7dXpTSV-Z-mVVh72OcJfNr1W~WRZwIjMDQ__" alt="นาย ปัณณวิชญ์ หลีกภัย">
+                    <h3>นาย ปัณณวิชญ์ หลีกภัย</h3>
+                    <p><em>ชั้น 6/13 เลขที่ 29</em></p>
+                </div>
             </div>
-            
-            <div class="about-card">
-                <img src="https://media-hosting.imagekit.io//e3962c8e8fa84567/513%2028.jpg?Expires=1833636651&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=IApvPc310iSHh~zIvIWoOHb-ABMcnPIPUmVAfVKHMQAz66kE1hCxbPUEWQNAIiekpZ1oDq9Nf8rmJ18AlAFtxzRAEOVGCXV1UWgz79A7kCvHHMbV1MnsOD2ZfY60ApLE-FRccfbKP3nLjaGZkcR3YA2ynywJVFHHau6MMA6mTUvy41nTWtRi9EDNP2Pbkxpr7hemhzcbtanbqtASvUHfWHspP5WXgJOXxq-TgoMYJudxvJbUsyp1Kg0WV1TOmo91xMgs5DC14xVXaE9lJ6NwfIG3zvoLehDiIXpYrGaI~nG~KUGXQJK~1st7lCdnkoLrCQhXJ55pGIOeIspbRj0LDQ__" alt="นาย อภิวิชญ์ อดุลธรรมวิทย์">
-                <h3>นาย อภิวิชญ์ อดุลธรรมวิทย์</h3>
-                <p><em>ชั้น 6/13 เลขที่ 28</em></p>
-            </div>
-            
-            <div class="about-card">
-                <img src="https://media-hosting.imagekit.io//a39b45568dc14fab/IMG_20250208_223334.jpg?Expires=1833637018&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=M2tJAPHXihMl1OUnwNiEBpEggLW-AZag9HFNkFb51KiIR6AGcdJkV0ovnL0DfgAx8WV7-vc65vXWLKNZWoB4vzXob5AYUfwmT9XcgJ1egfOuS3B95GNj-y3maPQ7nm2iW3Yv~Zd5HfeL~D2tZu8CdiJUdFj3bB4x22uceD6zVNP8FHAuMS5qcaDTwUQgoV9RQvKQFOLjsX9JX7ZQ6olCkXmdIXM31uDSwok1Vpru12aC3p16whyHG2iJ2s1iTROwcJurWM9F-R90NCjP63ZGEa0gdrKgHC6WvKeGSmkehKsqpQv7fL3i7dXpTSV-Z-mVVh72OcJfNr1W~WRZwIjMDQ__" alt="นาย ปัณณวิชญ์ หลีกภัย">
-                <h3>นาย ปัณณวิชญ์ หลีกภัย</h3>
-                <p><em>ชั้น 6/13 เลขที่ 29</em></p>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
 # --- Admin Panel ใน Sidebar ---
 with st.sidebar:
