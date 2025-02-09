@@ -8,7 +8,7 @@ import uuid
 
 # --- ตั้งค่า Page Configuration ---
 st.set_page_config(
-    page_title="🍽️ Smart Cooking App 😎",
+    page_title="🍽️ Smart Cooking App Version 1.0 😎",
     page_icon="🍳",
     layout="wide",
     initial_sidebar_state="collapsed",
