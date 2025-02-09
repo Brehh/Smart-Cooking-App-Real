@@ -436,6 +436,8 @@ def create_menu_mode():
                 st.session_state.loading = False
             else:
                 st.warning("⚠️ กรุณากรอกวัตถุดิบของคุณ")
+        else:
+            st.session_state.loading = False
 
 def search_menu_mode():
     st.subheader("✨ ค้นหาเมนูที่คุณน่าจะชอบ 3 เมนู")
@@ -508,6 +510,8 @@ def search_menu_mode():
                             )
             else:
                 st.warning("⚠️ ไม่พบเมนู โปรดลองอีกครั้ง")
+            st.session_state.loading = False
+        else:
             st.session_state.loading = False
 
 
