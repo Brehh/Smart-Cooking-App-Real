@@ -407,9 +407,6 @@ def create_menu_mode():
 
     if st.button("🍳 สร้างเมนู", use_container_width=True):
         if ingredients:
-            st.session_state["loading"] = True  # Set loading state to True
-            st.experimental_rerun()  # Rerun the script to disable the button
-            
             prompt = (f"ฉันมี: {ingredients} เป็นวัตถุดิบหลัก "
                         f"แนะนำเมนู {category} เวลาทำไม่เกิน {cook_time} นาที "
                         f"ประมาณ {calories} kcal ระดับความยาก ระดับ{difficulty} "
@@ -432,9 +429,6 @@ def create_menu_mode():
                         
             else:
                 st.warning("⚠️ ไม่พบเมนูที่ตรงกับเกณฑ์ของคุณ โปรดลองปรับการตั้งค่า")
-                
-            st.session_state["loading"] = False  # Reset loading state
-            st.experimental_rerun()  # Rerun the script to enable the button
         else:
             st.warning("⚠️ กรุณากรอกวัตถุดิบของคุณ")
 
@@ -485,9 +479,6 @@ def search_menu_mode():
                                                 'ไม่จำกัดงบ(ระดับ MrBeast)'], horizontal=True)
 
     if st.button("🔎 ค้นหาเมนู", use_container_width=True):
-        st.session_state["loading"] = True
-        st.experimental_rerun()  # Rerun the script to enable the button
-        
         if budget == 'ไม่จำกัดงบ(ระดับ MrBeast)':
             prompt = (f"ฉันต้องการซื้ออาหาร {category} รสชาติ {taste} ราคา 10000 -10000000 บาท {budget} ทีมีขายใน {country} "
                         f"แนะนำ 3 ตัวเลือกเมนู {category} ที่มีขายใน {country} คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ บอกราคาของอาหารด้วย บอกด้วยว่าหาซื้อได้ที่ร้านไหน")
@@ -510,9 +501,6 @@ def search_menu_mode():
                         )
         else:
             st.warning("⚠️ ไม่พบเมนู โปรดลองอีกครั้ง")
-
-        st.session_state["loading"] = False
-        st.experimental_rerun() 
 
 
 
