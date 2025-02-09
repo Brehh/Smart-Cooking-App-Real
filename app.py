@@ -198,7 +198,7 @@ active_users = get_active_users()
 # --- Header Section ---
 st.markdown(f"""
 <div class="header">
-    <h1>🍽️ Smart Cooking App 😎</h1>
+    <h1>🍽️ Smart Cooking App Version 1.0 😎</h1>
     <p class="visitor-info">Page Views: {visitor_count} | Active Users: {active_users}</p>
 </div>
 """, unsafe_allow_html=True)
