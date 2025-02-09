@@ -14,6 +14,243 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# --- Custom CSS (Light Theme & Responsive) ---
+st.markdown("""
+<style>
+/* Global Styles (Light Theme) */
+body {
+    font-family: 'Kanit', sans-serif;
+    color: #333; /* Dark text for light theme */
+    background-color: #f8f9fa; /* Light background */
+}
+
+.stApp {
+    background-color: #f8f9fa; /* Consistent background */
+}
+
+/* Main Container Styles */
+.main-container {
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    padding: 30px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0; /* Lighter border */
+    background-color: white; /* White container background */
+}
+
+/* Header - Title at the Top */
+.title {
+    color: #343a40;
+    text-align: center;
+    padding: 1rem 0;
+    font-size: 2.5rem; /* Slightly smaller for responsiveness */
+    font-weight: 700;
+    margin-bottom: 1rem;
+    position: relative; /* For positioning visitor counts */
+    width: 100%;
+}
+
+/* Visitor Count Styles - Positioned within the Title */
+.visitor-info {
+    position: absolute;
+    top: -20px; /* Adjusted positioning */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 1.2rem; /* Smaller font size */
+    color: #6c757d; /* Gray text */
+}
+
+
+/* Mode Selection Buttons - Using st.buttons */
+.mode-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 10px; /* Smaller gap */
+    margin-bottom: 20px;
+}
+
+.mode-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px; /* Smaller padding */
+    font-size: 1.2rem; /* Smaller font */
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.mode-button:hover {
+    background-color: #0056b3;
+}
+
+.mode-button-selected {
+    background-color: #28a745; /* Green - for the selected mode */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.mode-button-selected:hover {
+    background-color: #218838;
+}
+
+/* Subheaders */
+.st-expanderHeader {
+    font-size: 1.4rem; /* Smaller expander header */
+    font-weight: 600; /* Slightly less bold */
+    margin-bottom: 0.5rem;
+}
+
+/* Input Sections */
+.input-section {
+    margin-bottom: 0.8rem;
+}
+
+/* Input Fields - Streamlit Native Styling Adjustments */
+.stTextInput, .stSelectbox, .stSlider, .stRadio, .stNumberInput {
+    margin-bottom: 0.6rem;
+}
+.stTextInput>div>div>input, .stSelectbox>div>div>select,
+.stSlider>div>div>div[role="slider"], .stRadio>div>label, .stNumberInput>div>div>input {
+    border: 1px solid #ced4da; /* Lighter border */
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 1rem;
+    color: #495057; /* Darker text */
+}
+
+/* Text Area */
+.stTextArea>div>div>textarea{
+    border-color:#ced4da;  /* Consistent border color */
+    border-radius: 8px;
+    font-size: 1rem; /* Keep consistent font size */
+}
+
+
+/* Buttons */
+.stButton>button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 20px; /* Slightly smaller radius */
+    padding: 10px 24px;  /* Smaller padding */
+    font-size: 1.1rem; /* Slightly smaller font */
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 100%;
+}
+
+.stButton>button:hover {
+    background-color: #218838;
+    transform: translateY(-2px); /* Slightly less lift */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow */
+}
+
+.stButton>button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Smaller shadow */
+}
+
+/* Menu Columns */
+.menu-column {
+    border-radius: 12px;
+    padding: 20px;  /* Slightly smaller padding */
+    margin-bottom: 10px; /* Smaller margin */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* Lighter shadow */
+    transition: transform 0.25s ease, box-shadow: 0.25s ease;
+    border: 1px solid #dee2e6;
+}
+
+.menu-column:hover {
+    transform: scale(1.01); /* Smaller scale */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); /* Slightly smaller shadow */
+}
+
+.menu-column h3 {
+    color: #28a745;
+    margin-bottom: 10px;
+    font-size: 1.3rem; /* Slightly smaller font */
+    font-weight: 600;
+}
+
+.menu-item {
+    font-size: 1rem; /* Slightly smaller font */
+    line-height: 1.6;
+}
+
+/* About Section */
+.about-section {
+    border-radius: 12px;
+    padding: 20px; /* Slightly smaller padding */
+    margin-top: 20px; /* Smaller margin */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* Lighter shadow */
+    border: 1px solid #dee2e6;
+}
+.about-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.about-section li {
+    margin-bottom: 0.5rem;
+}
+.about-section img{
+        border-radius: 50% !important;
+        margin-bottom: 20px !important;
+}
+
+/* Spinners */
+.st-cf {
+    color: #28a745 !important;
+}
+
+/* Larger and Bolder Expander Text */
+.st-expander button[data-baseweb="button"] {
+    font-size: 1.2rem !important; /* Larger font */
+    font-weight: bold !important;  /* Bold text */
+}
+
+/* Change expander icons */
+.st-expander svg {
+    color: #007bff; /* Blue expander icon */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem; /* Smaller title on small screens */
+    }
+    .visitor-info {
+        top: -15px;
+        font-size: 0.9rem; /* Smaller visitor info */
+    }
+    .mode-buttons {
+        flex-direction: column; /* Stack on small screens */
+    }
+    .menu-column {
+        padding: 15px;
+    }
+     /* Adjust image size on smaller screens */
+    .about-section img {
+        width: 150px !important; /* Smaller image */
+        height: auto !important;
+    }
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 # --- Visitor Counter (File-based persistence) ---
 COUNTER_FILE = "visitor_count.txt"
 ACTIVE_USERS_FILE = "active_users.txt"
@@ -126,226 +363,7 @@ def process_menus(response_text):
     menu_list = [menu.strip() for menu in menu_list if menu.strip()]
     return menu_list
 
-# --- Custom CSS ---
-st.markdown("""
-<style>
-/* Global Styles */
-body {
-    font-family: 'Kanit', sans-serif;
-}
 
-.stApp {
-    /* Default Streamlit background */
-}
-
-/* Main Container Styles */
-.main-container {
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    margin-bottom: 20px;
-    border: 2px solid #e0e0e0;
-}
-
-/* Header - Title at the Top */
-.title {
-    color: #343a40;
-    text-align: center;
-    padding: 1rem 0;
-    font-size: 3rem; /* Adjust as needed */
-    font-weight: 700;
-    margin-bottom: 1rem;
-    position: relative; /* For positioning visitor counts */
-    width: 100%;     /* Ensure it spans the full width */
-    left: 0;
-}
-
-/* Visitor Count Styles - Positioned within the Title */
-.visitor-info {
-    position: absolute;
-    top: -25px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between; /* Space out the counts */
-    padding: 0 20px; /* Add some padding */
-    font-size: 1.5rem;
-    color: #666;
-
-}
-
-
-/* Mode Selection Buttons - Using st.buttons */
-.mode-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* Spacing between buttons */
-    margin-bottom: 30px;
-}
-
-.mode-button {
-    background-color: #007bff; /* Blue */
-    color: white;
-    border: none;
-    border-radius: 8px; /* Rounded */
-    padding: 15px 30px; /* Larger padding */
-    font-size: 1.4rem;  /* Larger font */
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.mode-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    transform: translateY(-2px);
-}
-
-.mode-button-selected {
-    background-color: #4379ff; /* Green - for the selected mode */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 15px 30px;
-    font-size: 1.4rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-.mode-button-selected:hover {
-    background-color: #1e7e34;
-    transform: translateY(-2px);
-}
-/* Subheaders */
-.st-expanderHeader {
-    font-size: 1.6rem; /* Even larger */
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-/* Input Sections */
-.input-section {
-    margin-bottom: 1rem;
-}
-
-/* Input Fields */
-.stTextInput, .stSelectbox, .stSlider, .stRadio, .stNumberInput {
-    margin-bottom: 0.8rem;
-}
-
-/* Text Area */
-.stTextArea>div>div>textarea{
-    border-color:#3498db;
-    border-radius: 8px;
-}
-
-/* Buttons */
-.stButton>button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    padding: 12px 28px;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-    width: 100%;
-}
-
-.stButton>button:hover {
-    background-color: #218838;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
-
-.stButton>button:active {
-    transform: translateY(0);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-}
-
-/* Menu Columns */
-.menu-column {
-    border-radius: 12px;
-    padding: 25px;
-    margin-bottom: 15px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.25s ease, box-shadow: 0.25s ease;
-    border: 1px solid #dee2e6;
-}
-
-.menu-column:hover {
-    transform: scale(1.02);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-}
-
-.menu-column h3 {
-    color: #28a745;
-    margin-bottom: 12px;
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-.menu-item {
-    font-size: 1.05rem;
-    line-height: 1.7;
-}
-
-/* About Section */
-.about-section {
-    border-radius: 12px;
-    padding: 25px;
-    margin-top: 30px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #dee2e6;
-}
-.about-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.about-section li {
-    margin-bottom: 0.6rem;
-}
-
-/* Spinners */
-.st-cf {
-    color: #28a745 !important;
-}
-
-/* Larger and Bolder Expander Text */
-.st-expander button[data-baseweb="button"] {
-    font-size: 1.4rem !important; /* Larger font */
-    font-weight: bold !important;  /* Bold text */
-}
-
-/* Change expander icons */
-.st-expander svg {
-    color: #007bff; /* Blue expander icon */
-}
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-    .title {
-        font-size: 2rem;
-        font-weight: bold;
-    }
-    .visitor-info {
-        top: -15px;
-        font-size: 1rem;
-        padding: 0 10px;
-    }
-
-     .mode-buttons{
-        flex-direction: column; /* Stack buttons vertically */
-     }
-     .menu-column {
-     padding: 15px;
-     }
-}
-
-
-</style>
-""", unsafe_allow_html=True)
 
 # --- Increment Visitor Count and Update Active Users ---
 visitor_count = increment_visitor_count()
@@ -353,7 +371,7 @@ update_active_user()
 active_users = get_active_users()
 
 # --- App UI ---
-st.markdown("<div class='title'>🍽️ Smart Cooking App 😎</h1>", unsafe_allow_html=True)
+st.markdown("<div class='title'>🍽️ Smart Cooking App Demo 0.2 😎</h1>", unsafe_allow_html=True)
 # --- Display Visitor Count and Active Users ---
 st.markdown(f"<div class='visitor-info'><span>Page Views: {visitor_count}</span> <span>Active Users: {active_users}</span></div>", unsafe_allow_html=True)
 
@@ -383,8 +401,8 @@ def create_menu_mode():
 
     with st.expander("📝 กรอกวัตถุดิบหลัก (คั่นด้วยจุลภาคด้วย)", expanded=True):
         ingredients = st.text_area("วัตถุดิบหลัก (คั่นด้วยจุลภาค):",
-                                        placeholder="เช่น ไข่, หมูสับ, ผักกาด...",
-                                        height=120, label_visibility="collapsed")
+                                    placeholder="เช่น ไข่, หมูสับ, ผักกาด...",
+                                    height=120, label_visibility="collapsed")
 
     with st.expander("⚙️ ปรับแต่งเมนู", expanded=True):
         col1, col2 = st.columns(2)
@@ -404,9 +422,9 @@ def create_menu_mode():
     if st.button("🍳 สร้างเมนู", use_container_width=True):
         if ingredients:
             prompt = (f"ฉันมี: {ingredients} เป็นวัตถุดิบหลัก "
-                        f"แนะนำเมนู {category} เวลาทำไม่เกิน {cook_time} นาที "
-                        f"ประมาณ {calories} kcal ระดับความยาก ระดับ{difficulty} "
-                        f"พร้อมวิธีทำอย่างละเอียด เสนอ 3 ตัวเลือก คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ ถ้าวัตถุดิบที่มีขาดอะไรไปให้บอกด้วย และบอกจำนวนที่ต้องใช้อย่างละเอียด")
+                      f"แนะนำเมนู {category} เวลาทำไม่เกิน {cook_time} นาที "
+                      f"ประมาณ {calories} kcal ระดับความยาก ระดับ{difficulty} "
+                      f"พร้อมวิธีทำอย่างละเอียด เสนอ 3 ตัวเลือก คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ ถ้าวัตถุดิบที่มีขาดอะไรไปให้บอกด้วย และบอกจำนวนที่ต้องใช้อย่างละเอียด")
             with st.spinner("กำลังสร้างสรรค์ไอเดียอร่อยๆ... 3 เมนู"):
                 menu_list = process_menus(call_gemini_api(prompt))
 
@@ -469,18 +487,18 @@ def search_menu_mode():
                                     "อาหารฟิวชั่น", "ขนม", "เครื่องดื่ม", "อาหารตะวันตก", "อาหารนานาชาติ"])
         with col2:
             taste = st.radio("รสชาติ", ["เผ็ด", "หวาน", "เค็ม", "เปรี้ยว", "ขม", "อูมามิ", "มัน", "ฝาด", "จืด", 'รสจัด',
-                                                'กลมกล่อม', 'กลางๆ'], horizontal=True)
+                                            'กลมกล่อม', 'กลางๆ'], horizontal=True)
             budget = st.radio("งบประมาณ", ['ต่ำกว่า 100 บาท', '100 - 300 บาท', '300 - 1000 บาท', '1000 - 10000 บาท',
-                                                'ไม่จำกัดงบ(ระดับ MrBeast)'], horizontal=True)
+                                            'ไม่จำกัดงบ(ระดับ MrBeast)'], horizontal=True)
 
     if st.button("🔎 ค้นหาเมนู", use_container_width=True):
         if budget == 'ไม่จำกัดงบ(ระดับ MrBeast)':
             prompt = (f"ฉันต้องการซื้ออาหาร {category} รสชาติ {taste} ราคา 10000 -10000000 บาท {budget} ทีมีขายใน {country} "
-                        f"แนะนำ 3 ตัวเลือกเมนู {category} ที่มีขายใน {country} คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ บอกราคาของอาหารด้วย บอกด้วยว่าหาซื้อได้ที่ร้านไหน")
+                      f"แนะนำ 3 ตัวเลือกเมนู {category} ที่มีขายใน {country} คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ บอกราคาของอาหารด้วย บอกด้วยว่าหาซื้อได้ที่ร้านไหน")
             print('MrBeast') # Debugging line
         else:
             prompt = (f"ฉันต้องการซื้ออาหาร {category} รสชาติ {taste} ราคา {budget} ทีมีขายใน {country} "
-                        f"แนะนำ 3 ตัวเลือกเมนู {category} ที่มีขายใน {country} คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ บอกราคาของอาหารด้วย บอกด้วยว่าหาซื้อได้ที่ร้านไหน")
+                      f"แนะนำ 3 ตัวเลือกเมนู {category} ที่มีขายใน {country} คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ บอกราคาของอาหารด้วย บอกด้วยว่าหาซื้อได้ที่ร้านไหน")
         with st.spinner("กำลังค้นหาตัวเลือกที่ดีที่สุด... 3 เมนู"):
             menu_list = process_menus(call_gemini_api(prompt))
 
@@ -515,21 +533,21 @@ if st.button("📜 เกี่ยวกับผู้พัฒนา", use_con
         <div class='about-section'>
         <ul style='list-style: none; padding: 0; display: flex; flex-direction: column; align-items: center;'>
 
-        <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>นาย กัลปพฤกษ์ วิเชียรรัตน์ (คนแบกอิๆๆ😎)</li>
-        <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 3</em></li>
-        <img src='https://media-hosting.imagekit.io//1b3ed8f3573a4e71/IMG_20241011_135949_649.webp?Expires=1833623214&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=XkV2~CAZ1JL5DLoYHTK43-DH1HSmbcpRfZqqgUbS~YZHNtsgvL-UkoVf9iDz8-pZKNYsLqdyFOahcMiuMR1ao1FQiu3I2iqWiSmsoBiHOfr3OxBObD32WF30wS6NTbMCg7MmWPKCratj29lGI0fhN~33HlEnQ50hMnDRnH9CKvwY3tOWxM2sTNcwZ5J1Q1nP5wCAUwCCFaeNxJwFxCWLBdR268qhrfTxu9-pgodzqM1~Jv0bj3UTjx2i7IMm7eLjfU14x4aE9HUjTKrgvzsadlHSzJgYIyhQvetbRsEVPeIiiIz9aMo3YzK-JCz3CPMnoU-7aBLe5yLmVOEeHvMTIQ__' width='250px' style='border-radius: 10%; margin-bottom: 20px;'>
+        <li style='font-size: 1.4rem; font-weight: bold; margin-top: 10px;'>นาย กัลปพฤกษ์ วิเชียรรัตน์ (คนแบกอิๆๆ😎)</li>
+        <li style='font-size: 1.1rem;'><em>ชั้น 6/13 เลขที่ 3</em></li>
+        <img src='https://media-hosting.imagekit.io//1b3ed8f3573a4e71/IMG_20241011_135949_649.webp?Expires=1833623214&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=XkV2~CAZ1JL5DLoYHTK43-DH1HSmbcpRfZqqgUbS~YZHNtsgvL-UkoVf9iDz8-pZKNYsLqdyFOahcMiuMR1ao1FQiu3I2iqWiSmsoBiHOfr3OxBObD32WF30wS6NTbMCg7MmWPKCratj29lGI0fhN~33HlEnQ50hMnDRnH9CKvwY3tOWxM2sTNcwZ5J1Q1nP5wCAUwCCFaeNxJwFxCWLBdR268qhrfTxu9-pgodzqM1~Jv0bj3UTjx2i7IMm7eLjfU14x4aE9HUjTKrgvzsadlHSzJgYIyhQvetbRsEVPeIiiIz9aMo3YzK-JCz3CPMnoU-7aBLe5yLmVOEeHvMTIQ__' width='250px'>
 
-        <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>นาย ธีราธร มุกดาเพชรรัตน์ (ผู้ช่วย No.1)</li>
-        <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 13</em></li>
-        <img src='https://media-hosting.imagekit.io//794cd2dd43b24aff/perth_tm2025_02_08_18_38_478aae62c6-a109-49ec-aef1-8152096b5149.jpg?Expires=1833622873&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=u9sNP10b88y78jCRRUyLwn3OeHhsL7C0QbvaOcjCmOSGCD69RWN6e08aV19Se-7mknqcTF~zU9~snvhpFExvNR9jMhDubAePljCWIhBzzbpsRsOQ5akdEMa9AXVUOuXIzFN-igpqs-g9t8y~TqJ6mOO7daYkGa~L6Pnp3~G47pI3yWS5DVZ5hXcSHK7GQmupabIkfaaM-67FPYu7wF96vGlfatkSqA5zzIUGeX0yc~3kzI7dlCzqzqaXRKng6upQ07299g0LwFv3LBRO22VffO1fZr82TxnXUdEPcfmci-esT9LH6JEKwRET2fRLklG~qBRLc8wnzS0RdyrYjXRhEA__' width='250px' style='border-radius: 50%; margin-bottom: 20px;'>
+        <li style='font-size: 1.4rem; font-weight: bold; margin-top: 10px;'>นาย ธีราธร มุกดาเพชรรัตน์ (ผู้ช่วย No.1)</li>
+        <li style='font-size: 1.1rem;'><em>ชั้น 6/13 เลขที่ 13</em></li>
+        <img src='https://media-hosting.imagekit.io//794cd2dd43b24aff/perth_tm2025_02_08_18_38_478aae62c6-a109-49ec-aef1-8152096b5149.jpg?Expires=1833622873&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=u9sNP10b88y78jCRRUyLwn3OeHhsL7C0QbvaOcjCmOSGCD69RWN6e08aV19Se-7mknqcTF~zU9~snvhpFExvNR9jMhDubAePljCWIhBzzbpsRsOQ5akdEMa9AXVUOuXIzFN-igpqs-g9t8y~TqJ6mOO7daYkGa~L6Pnp3~G47pI3yWS5DVZ5hXcSHK7GQmupabIkfaaM-67FPYu7wF96vGlfatkSqA5zzIUGeX0yc~3kzI7dlCzqzqaXRKng6upQ07299g0LwFv3LBRO22VffO1fZr82TxnXUdEPcfmci-esT9LH6JEKwRET2fRLklG~qBRLc8wnzS0RdyrYjXRhEA__' width='250px'>
 
-        <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>นาย อภิวิชญ์ อดุลธรรมวิทย์ (ผู้ช่วย No.2)</li>
-        <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 28</em></li>
-        <img src='https://media-hosting.imagekit.io//e3962c8e8fa84567/513%2028.jpg?Expires=1833636651&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=IApvPc310iSHh~zIvIWoOHb-ABMcnPIPUmVAfVKHMQAz66kE1hCxbPUEWQNAIiekpZ1oDq9Nf8rmJ18AlAFtxzRAEOVGCXV1UWgz79A7kCvHHMbV1MnsOD2ZfY60ApLE-FRccfbKP3nLjaGZkcR3YA2ynywJVFHHau6MMA6mTUvy41nTWtRi9EDNP2Pbkxpr7hemhzcbtanbqtASvUHfWHspP5WXgJOXxq-TgoMYJudxvJbUsyp1Kg0WV1TOmo91xMgs5DC14xVXaE9lJ6NwfIG3zvoLehDiIXpYrGaI~nG~KUGXQJK~1st7lCdnkoLrCQhXJ55pGIOeIspbRj0LDQ__' width='250px' style='border-radius: 50%; margin-bottom: 20px;'>
+        <li style='font-size: 1.4rem; font-weight: bold; margin-top: 10px;'>นาย อภิวิชญ์ อดุลธรรมวิทย์ (ผู้ช่วย No.2)</li>
+        <li style='font-size: 1.1rem;'><em>ชั้น 6/13 เลขที่ 28</em></li>
+        <img src='https://media-hosting.imagekit.io//e3962c8e8fa84567/513%2028.jpg?Expires=1833636651&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=IApvPc310iSHh~zIvIWoOHb-ABMcnPIPUmVAfVKHMQAz66kE1hCxbPUEWQNAIiekpZ1oDq9Nf8rmJ18AlAFtxzRAEOVGCXV1UWgz79A7kCvHHMbV1MnsOD2ZfY60ApLE-FRccfbKP3nLjaGZkcR3YA2ynywJVFHHau6MMA6mTUvy41nTWtRi9EDNP2Pbkxpr7hemhzcbtanbqtASvUHfWHspP5WXgJOXxq-TgoMYJudxvJbUsyp1Kg0WV1TOmo91xMgs5DC14xVXaE9lJ6NwfIG3zvoLehDiIXpYrGaI~nG~KUGXQJK~1st7lCdnkoLrCQhXJ55pGIOeIspbRj0LDQ__' width='250px'>
 
-        <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>นาย ปัณณวิชญ์ หลีกภัย</li>
-        <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 29</em></li>
-        <img src='https://media-hosting.imagekit.io//a39b45568dc14fab/IMG_20250208_223334.jpg?Expires=1833637018&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=M2tJAPHXihMl1OUnwNiEBpEggLW-AZag9HFNkFb51KiIR6AGcdJkV0ovnL0DfgAx8WV7-vc65vXWLKNZWoB4vzXob5AYUfwmT9XcgJ1egfOuS3B95GNj-y3maPQ7nm2iW3Yv~Zd5HfeL~D2tZu8CdiJUdFj3bB4x22uceD6zVNP8FHAuMS5qcaDTwUQgoV9RQvKQFOLjsX9JX7ZQ6olCkXmdIXM31uDSwok1Vpru12aC3p16whyHG2iJ2s1iTROwcJurWM9F-R90NCjP63ZGEa0gdrKgHC6WvKeGSmkehKsqpQv7fL3i7dXpTSV-Z-mVVh72OcJfNr1W~WRZwIjMDQ__' width='250px' style='border-radius: 50%;'>
+        <li style='font-size: 1.4rem; font-weight: bold; margin-top: 10px;'>นาย ปัณณวิชญ์ หลีกภัย</li>
+        <li style='font-size: 1.1rem;'><em>ชั้น 6/13 เลขที่ 29</em></li>
+        <img src='https://media-hosting.imagekit.io//a39b45568dc14fab/IMG_20250208_223334.jpg?Expires=1833637018&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=M2tJAPHXihMl1OUnwNiEBpEggLW-AZag9HFNkFb51KiIR6AGcdJkV0ovnL0DfgAx8WV7-vc65vXWLKNZWoB4vzXob5AYUfwmT9XcgJ1egfOuS3B95GNj-y3maPQ7nm2iW3Yv~Zd5HfeL~D2tZu8CdiJUdFj3bB4x22uceD6zVNP8FHAuMS5qcaDTwUQgoV9RQvKQFOLjsX9JX7ZQ6olCkXmdIXM31uDSwok1Vpru12aC3p16whyHG2iJ2s1iTROwcJurWM9F-R90NCjP63ZGEa0gdrKgHC6WvKeGSmkehKsqpQv7fL3i7dXpTSV-Z-mVVh72OcJfNr1W~WRZwIjMDQ__' width='250px'>
         </ul>
         </div>
         """, unsafe_allow_html=True)
@@ -564,4 +582,4 @@ if admin_password == st.secrets["ADMIN_PASSWORD"]:
         st.text_area("Active Users File Content:", read_file_content(ACTIVE_USERS_FILE), height=100)
 else:
   if admin_password != "":  # Only show the warning if the user *tried* to enter a password
-      st.warning("Incorrect password or unauthorized access.")
+       st.warning("Incorrect password or unauthorized access.")
