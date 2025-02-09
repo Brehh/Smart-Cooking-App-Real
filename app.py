@@ -162,17 +162,6 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Smaller shadow */
 }
 
-/* Disable button while generating */
-.stButton[disabled] {
-    background-color: #a9a9a9 !important;  /* Gray out */
-    color: #6c757d !important;  /* Lighter text */
-    cursor: not-allowed !important;
-    box-shadow: none !important; /* Remove shadow */
-}
-.stButton[disabled]:hover {
-    transform: none !important; /* Disable hover effect */
-}
-
 /* Menu Columns */
 .menu-column {
     border-radius: 12px;
@@ -217,8 +206,8 @@ body {
     margin-bottom: 0.5rem;
 }
 .about-section img{
-    border-radius: 50% !important;
-    margin-bottom: 20px !important;
+        border-radius: 50% !important;
+        margin-bottom: 20px !important;
 }
 
 /* Spinners */
@@ -260,6 +249,7 @@ body {
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 # --- Visitor Counter (File-based persistence) ---
 COUNTER_FILE = "visitor_count.txt"
@@ -429,13 +419,8 @@ def create_menu_mode():
             difficulty = st.radio("ระดับความยาก", ["ง่าย", "ปานกลาง", "ยาก", 'ยากมาก', 'นรก'], horizontal=True)
             cook_time = st.slider("เวลาทำอาหาร (นาที)", 5, 180, 30, step=5)
 
-    # Use a session state variable to track button clicks
-    if 'create_button_clicked' not in st.session_state:
-        st.session_state.create_button_clicked = False
-
-    if st.button("🍳 สร้างเมนู", key='create_menu_button', use_container_width=True, disabled=st.session_state.create_button_clicked):
+    if st.button("🍳 สร้างเมนู", use_container_width=True):
         if ingredients:
-            st.session_state.create_button_clicked = True  # Disable the button
             prompt = (f"ฉันมี: {ingredients} เป็นวัตถุดิบหลัก "
                       f"แนะนำเมนู {category} เวลาทำไม่เกิน {cook_time} นาที "
                       f"ประมาณ {calories} kcal ระดับความยาก ระดับ{difficulty} "
@@ -456,10 +441,8 @@ def create_menu_mode():
                             )
             else:
                 st.warning("⚠️ ไม่พบเมนูที่ตรงกับเกณฑ์ของคุณ โปรดลองปรับการตั้งค่า")
-                st.session_state.create_button_clicked = False # Re-enable if API call fails
         else:
             st.warning("⚠️ กรุณากรอกวัตถุดิบของคุณ")
-            st.session_state.create_button_clicked = False # Re-enable in case of input error
 
 
 def search_menu_mode():
@@ -508,13 +491,7 @@ def search_menu_mode():
             budget = st.radio("งบประมาณ", ['ต่ำกว่า 100 บาท', '100 - 300 บาท', '300 - 1000 บาท', '1000 - 10000 บาท',
                                             'ไม่จำกัดงบ(ระดับ MrBeast)'], horizontal=True)
 
-    # Use a session state variable to track button clicks
-    if 'search_button_clicked' not in st.session_state:
-        st.session_state.search_button_clicked = False
-
-
-    if st.button("🔎 ค้นหาเมนู", key='search_menu_button', use_container_width=True, disabled=st.session_state.search_button_clicked):
-        st.session_state.search_button_clicked = True # Disable button
+    if st.button("🔎 ค้นหาเมนู", use_container_width=True):
         if budget == 'ไม่จำกัดงบ(ระดับ MrBeast)':
             prompt = (f"ฉันต้องการซื้ออาหาร {category} รสชาติ {taste} ราคา 10000 -10000000 บาท {budget} ทีมีขายใน {country} "
                       f"แนะนำ 3 ตัวเลือกเมนู {category} ที่มีขายใน {country} คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ บอกราคาของอาหารด้วย บอกด้วยว่าหาซื้อได้ที่ร้านไหน")
@@ -538,7 +515,6 @@ def search_menu_mode():
                         )
         else:
             st.warning("⚠️ ไม่พบเมนู โปรดลองอีกครั้ง")
-            st.session_state.search_button_clicked = False # Re-enable on failure
 
 
 
