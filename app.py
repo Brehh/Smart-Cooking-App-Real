@@ -6,7 +6,7 @@ import os
 import time
 import uuid
 
-# --- Page Configuration ---
+# --- ตั้งค่า Page Configuration ---
 st.set_page_config(
     page_title="🍽️ Smart Cooking App 😎",
     page_icon="🍳",
@@ -14,35 +14,28 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# --- Visitor Counter (File-based persistence) ---
+# --- File-based persistence สำหรับ Visitor Count และ Active Users ---
 COUNTER_FILE = "visitor_count.txt"
 ACTIVE_USERS_FILE = "active_users.txt"
-ACTIVE_TIMEOUT = 20  # Consider users active if they interacted within 10 seconds
-PING_INTERVAL = 5  # Ping every 5 seconds to keep users active
-
+ACTIVE_TIMEOUT = 20  # วินาทีที่ผู้ใช้ถูกนับเป็น active
 
 def get_visitor_count():
-    """Gets the current visitor count from a file."""
     try:
         with open(COUNTER_FILE, "r") as f:
             content = f.read().strip()
-            return int(content) if content else 0  # Handle empty file
+            return int(content) if content else 0
     except FileNotFoundError:
         with open(COUNTER_FILE, "w") as f:
             f.write("0")
         return 0
 
-
 def increment_visitor_count():
-    """Increments the visitor count every time the page is accessed."""
     count = get_visitor_count() + 1
     with open(COUNTER_FILE, "w") as f:
         f.write(str(count))
     return count
 
-
 def get_active_users():
-    """Counts the number of active users in the last ACTIVE_TIMEOUT seconds and removes inactive ones."""
     current_time = time.time()
     active_users = {}
     try:
@@ -50,28 +43,23 @@ def get_active_users():
             for line in f:
                 line = line.strip()
                 if not line or "," not in line:
-                    continue  # Skip empty or malformed lines
+                    continue
                 user_id, last_seen = line.split(",")
                 if current_time - float(last_seen) <= ACTIVE_TIMEOUT:
                     active_users[user_id] = last_seen
     except FileNotFoundError:
         pass
 
-    # Update the file with only currently active users
     with open(ACTIVE_USERS_FILE, "w") as f:
         for user_id, last_seen in active_users.items():
             f.write(f"{user_id},{last_seen}\n")
-
     return len(active_users)
 
-
 def update_active_user():
-    """Keeps updating the user's active status while the page is open."""
     if "session_id" not in st.session_state:
         st.session_state.session_id = str(uuid.uuid4())
     user_id = st.session_state.session_id
     current_time = time.time()
-
     active_users = {}
     try:
         with open(ACTIVE_USERS_FILE, "r") as f:
@@ -86,15 +74,12 @@ def update_active_user():
                 active_users[existing_user_id] = last_seen
     except FileNotFoundError:
         pass
-
-    # Update the current user's last seen time
     active_users[user_id] = str(current_time)
     with open(ACTIVE_USERS_FILE, "w") as f:
         for uid, last_seen in active_users.items():
             f.write(f"{uid},{last_seen}\n")
 
-
-# --- API Key Setup (From Streamlit Secrets) ---
+# --- API Key Setup ---
 API_KEYS = st.secrets["API_KEYS"]
 
 # --- Helper Functions ---
@@ -122,462 +107,232 @@ def process_menus(response_text):
             break
     else:
         return [response_text.strip()]
-
     menu_list = [menu.strip() for menu in menu_list if menu.strip()]
     return menu_list
 
-# --- Custom CSS ---
+def format_menu_text(menu):
+    # แปลง **bold** หรือ *bold* เป็น HTML <b> tag
+    menu = menu.replace("**", "<b>", 1).replace("**", "</b>", 1)
+    menu = menu.replace("*", "<b>", 1).replace("*", "</b>", 1)
+    return menu
+
+# --- Custom CSS สำหรับดีไซน์ที่ทันสมัย ---
 st.markdown("""
 <style>
-/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
 body {
     font-family: 'Kanit', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
 }
-
-.stApp {
-    /* Default Streamlit background */
-}
-
-/* Main Container Styles */
-.main-container {
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    margin-bottom: 20px;
-    border: 2px solid #e0e0e0;
-}
-
-/* Header - Title at the Top */
-.title {
-    color: #343a40;
+.header {
+    background-color: #ffffff;
+    padding: 20px;
+    border-bottom: 2px solid #dee2e6;
     text-align: center;
-    padding: 1rem 0;
-    font-size: 3rem; /* Adjust as needed */
-    font-weight: 700;
-    margin-bottom: 1rem;
-    position: relative; /* For positioning visitor counts */
-    width: 100%;     /* Ensure it spans the full width */
-    left: 0;
+    margin-bottom: 20px;
 }
-
-/* Visitor Count Styles - Positioned within the Title */
+.header h1 {
+    font-size: 3rem;
+    margin: 0;
+    color: #343a40;
+}
 .visitor-info {
-    position: absolute;
-    top: -25px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between; /* Space out the counts */
-    padding: 0 20px; /* Add some padding */
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: #666;
-
 }
-
-
-/* Mode Selection Buttons - Using st.buttons */
-.mode-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* Spacing between buttons */
-    margin-bottom: 30px;
-}
-
-.mode-button {
-    background-color: #007bff; /* Blue */
-    color: white;
-    border: none;
-    border-radius: 8px; /* Rounded */
-    padding: 15px 30px; /* Larger padding */
-    font-size: 1.4rem;  /* Larger font */
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.mode-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    transform: translateY(-2px);
-}
-
-.mode-button-selected {
-    background-color: #4379ff; /* Green - for the selected mode */
-    color: white;
-    border: none;
+.card {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
     border-radius: 8px;
-    padding: 15px 30px;
-    font-size: 1.4rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-.mode-button-selected:hover {
-    background-color: #1e7e34;
-    transform: translateY(-2px);
-}
-/* Subheaders */
-.st-expanderHeader {
-    font-size: 1.6rem; /* Even larger */
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-/* Input Sections */
-.input-section {
-    margin-bottom: 1rem;
-}
-
-/* Input Fields */
-.stTextInput, .stSelectbox, .stSlider, .stRadio, .stNumberInput {
-    margin-bottom: 0.8rem;
-}
-
-/* Text Area */
-.stTextArea>div>div>textarea{
-    border-color:#3498db;
+.menu-column {
+    border: 1px solid #dee2e6;
     border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
 }
-
-/* Buttons */
-.stButton>button {
+.menu-column:hover {
+    transform: translateY(-5px);
+}
+.menu-column h4 {
+    color: #28a745;
+}
+.button-primary {
     background-color: #28a745;
-    color: white;
+    color: #fff;
     border: none;
     border-radius: 25px;
     padding: 12px 28px;
     font-size: 1.2rem;
+    cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-    width: 100%;
 }
-
-.stButton>button:hover {
+.button-primary:hover {
     background-color: #218838;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
-
-.stButton>button:active {
-    transform: translateY(0);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-}
-
-/* Menu Columns */
-.menu-column {
-    border-radius: 12px;
-    padding: 25px;
-    margin-bottom: 15px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.25s ease, box-shadow: 0.25s ease;
-    border: 1px solid #dee2e6;
-}
-
-.menu-column:hover {
-    transform: scale(1.02);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-}
-
-.menu-column h3 {
-    color: #28a745;
-    margin-bottom: 12px;
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-.menu-item {
-    font-size: 1.05rem;
-    line-height: 1.7;
-}
-
-/* About Section */
-.about-section {
-    border-radius: 12px;
-    padding: 25px;
-    margin-top: 30px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #dee2e6;
-}
-.about-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.about-section li {
-    margin-bottom: 0.6rem;
-}
-
-/* Spinners */
-.st-cf {
-    color: #28a745 !important;
-}
-
-/* Larger and Bolder Expander Text */
-.st-expander button[data-baseweb="button"] {
-    font-size: 1.4rem !important; /* Larger font */
-    font-weight: bold !important;  /* Bold text */
-}
-
-/* Change expander icons */
-.st-expander svg {
-    color: #007bff; /* Blue expander icon */
-}
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-    .title {
-        font-size: 2rem;
-        font-weight: bold;
-    }
-    .visitor-info {
-        top: -15px;
-        font-size: 1rem;
-        padding: 0 10px;
-    }
-
-     .mode-buttons{
-        flex-direction: column; /* Stack buttons vertically */
-     }
-     .menu-column {
-     padding: 15px;
-     }
-}
-
-
 </style>
 """, unsafe_allow_html=True)
 
-if 'loading' not in st.session_state:
-    st.session_state.loading = False  # No mode selected initially
-
-# --- Increment Visitor Count and Update Active Users ---
+# --- Update Visitor Count และ Active Users ---
 visitor_count = increment_visitor_count()
 update_active_user()
 active_users = get_active_users()
 
-# --- App UI ---
-st.markdown("<div class='title'>🍽️ Smart Cooking App 😎</h1>", unsafe_allow_html=True)
-# --- Display Visitor Count and Active Users ---
-st.markdown(f"<div class='visitor-info'><span>Page Views: {visitor_count}</span> <span>Active Users: {active_users}</span></div>", unsafe_allow_html=True)
+# --- Header Section ---
+st.markdown(f"""
+<div class="header">
+    <h1>🍽️ Smart Cooking App 😎</h1>
+    <p class="visitor-info">Page Views: {visitor_count} | Active Users: {active_users}</p>
+</div>
+""", unsafe_allow_html=True)
 
+# --- สร้าง Tab สำหรับแต่ละโหมด ---
+tabs = st.tabs(["📝 สร้างเมนูอาหาร", "🔍 ค้นหาเมนูอาหาร", "📜 เกี่ยวกับผู้พัฒนา"])
 
-# --- Mode Selection (Using Buttons and Session State) ---
-# Initialize mode if not in session state.  Keep it closed initially.
-if 'mode' not in st.session_state:
-    st.session_state.mode = None  # No mode selected initially
-
-with st.container(border=True):
-    with st.expander("🔄 เลือกโหมดการทำงาน", expanded = not st.session_state.mode is not None):
-        col1, col2 = st.columns(2)
-
-        with col1:
-            if st.button("📝 สร้างเมนูอาหาร", key="create_mode", type="primary" if st.session_state.mode == "create" else "secondary", use_container_width=True):
-                st.session_state.mode = "create"
-
-        with col2:
-            if st.button("🔍 ค้นหารายการอาหาร", key="search_mode",  type="primary" if st.session_state.mode == "search" else "secondary", use_container_width=True):
-                st.session_state.mode = "search"
-
-def format_menu_text(menu):
-    """Fix bold formatting and replace markdown asterisks with HTML bold tags."""
-    menu = menu.replace("**", "<b>", 1).replace("**", "</b>", 1)  # Ensure balanced bold tags
-    menu = menu.replace("*", "<b>", 1).replace("*", "</b>", 1)
-    return menu
-
-# --- Function Definitions for Each Mode ---
+# --- ฟังก์ชันสำหรับโหมดสร้างเมนูอาหาร ---
 def create_menu_mode():
-    st.subheader("✨ สร้างเมนูอาหารทำเอง 🤩")
-
-    with st.expander("📝 กรอกวัตถุดิบหลัก (คั่นด้วยจุลภาคด้วย)", expanded=True):
+    st.subheader("✨ สร้างเมนูอาหารทำเอง")
+    
+    with st.expander("📝 กรอกวัตถุดิบหลัก", expanded=True):
         ingredients = st.text_area("วัตถุดิบหลัก (คั่นด้วยจุลภาค):",
-                                        placeholder="เช่น ไข่, หมูสับ, ผักกาด...",
-                                        height=120, label_visibility="collapsed")
-
+                                   placeholder="เช่น ไข่, หมูสับ, ผักกาด...",
+                                   height=120)
     with st.expander("⚙️ ปรับแต่งเมนู", expanded=True):
         col1, col2 = st.columns(2)
         with col1:
             category = st.selectbox("ประเภทอาหาร",
                                     ["อาหารทั่วไป", "มังสวิรัติ", "อาหารคลีน", "อาหารไทย", "อาหารญี่ปุ่น",
-                                    "อาหารตะวันตก", "อาหารจีน", "อาหารอินเดีย", "อาหารเวียดนาม", "อาหารเกาหลี",
-                                    "อาหารเม็กซิกัน", "อาหารอิตาเลียน", "อาหารฟาสต์ฟู้ด", "อาหารทะเล",
-                                    "อาหารมังสวิรัติ", "อาหารเจ", "อาหารอีสาน", "อาหารใต้", "อาหารเหนือ",
-                                    "อาหารฟิวชั่น", "ขนม", "เครื่องดื่ม"])
+                                     "อาหารตะวันตก", "อาหารจีน", "อาหารอินเดีย", "อาหารเวียดนาม", "อาหารเกาหลี",
+                                     "อาหารเม็กซิกัน", "อาหารอิตาเลียน", "อาหารฟาสต์ฟู้ด", "อาหารทะเล",
+                                     "อาหารเจ", "อาหารอีสาน", "อาหารใต้", "อาหารเหนือ", "อาหารฟิวชั่น", "ขนม", "เครื่องดื่ม"])
             calories = st.slider("แคลอรี่ที่ต้องการ (kcal)", 100, 1500, 500, step=50)
-
         with col2:
-            difficulty = st.radio("ระดับความยาก", ["ง่าย", "ปานกลาง", "ยาก", 'ยากมาก', 'นรก'], horizontal=True)
+            difficulty = st.radio("ระดับความยาก", ["ง่าย", "ปานกลาง", "ยาก", "ยากมาก", "นรก"], horizontal=True)
             cook_time = st.slider("เวลาทำอาหาร (นาที)", 5, 180, 30, step=5)
-
-    if st.button("🍳 สร้างเมนู", use_container_width=True):
-        if st.session_state.loading == False:
-            if ingredients:
-                st.session_state.loading = True
-                prompt = (f"ฉันมี: {ingredients} เป็นวัตถุดิบหลัก "
-                            f"แนะนำเมนู {category} เวลาทำไม่เกิน {cook_time} นาที "
-                            f"ประมาณ {calories} kcal ระดับความยาก ระดับ{difficulty} "
-                            f"พร้อมวิธีทำอย่างละเอียด เสนอ 3 ตัวเลือก คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ ถ้าวัตถุดิบที่มีขาดอะไรไปให้บอกด้วย และบอกจำนวนที่ต้องใช้อย่างละเอียด")
-                
-                with st.spinner("กำลังสร้างสรรค์ไอเดียอร่อยๆ... 3 เมนู"):
-                    menu_list = process_menus(call_gemini_api(prompt))
     
-                if menu_list:
-                    st.subheader("🧑‍🍳 เมนูแนะนำ 3 เมนู:")
-                    cols = st.columns(3)
-                    for i, menu in enumerate(menu_list[:3]):
-                        with cols[i]:
-                            # Convert Markdown **bold** to HTML <b> tags
-                            menu = format_menu_text(menu)
-                            st.markdown(
-                                f"<div class='menu-column'><h3>🍽️ เมนูที่ {i + 1}</h3><p class='menu-item'>{menu}</p></div>",
-                                unsafe_allow_html=True
-                                )            
-                else:
-                    st.warning("⚠️ ไม่พบเมนูที่ตรงกับเกณฑ์ของคุณ โปรดลองปรับการตั้งค่า")
-                st.session_state.loading = False
-            else:
-                st.warning("⚠️ กรุณากรอกวัตถุดิบของคุณ")
-        else:
-            st.session_state.loading = False
-
-def search_menu_mode():
-    st.subheader("✨ ค้นหาเมนูที่คุณน่าจะชอบ 3 เมนู")
-
-    with st.expander("⚙️ ตั้งค่าการค้นหา", expanded=True):
-        col1, col2 = st.columns(2)
-        with col1:
-            country = st.selectbox('ประเทศที่คุณอยู่ในตอนนี้',
-                                    ["ไทย", "ญี่ปุ่น", "เกาหลีใต้", "สหรัฐอเมริกา", "อังกฤษ", "ฝรั่งเศส", "เยอรมนี",
-                                    "จีน", "อินเดีย", "รัสเซีย", "แคนาดา", "บราซิล", "ออสเตรเลีย", "อาร์เจนตินา",
-                                    "เม็กซิโก", "อิตาลี", "สเปน", "เนเธอร์แลนด์", "สวิตเซอร์แลนด์", "เบลเยียม",
-                                    "สวีเดน", "นอร์เวย์", "เดนมาร์ก", "ฟินแลนด์", "โปรตุเกส", "ออสเตรีย", "ไอร์แลนด์",
-                                    "กรีซ", "ตุรกี", "แอฟริกาใต้", "อียิปต์", "ไนจีเรีย", "เคนยา", "โมร็อกโก",
-                                    "แอลจีเรีย", "ซาอุดีอาระเบีย", "สหรัฐอาหรับเอมิเรตส์", "กาตาร์", "โอมาน", "คูเวต",
-                                    "อิหร่าน", "อิรัก", "ปากีสถาน", "บังกลาเทศ", "อินโดนีเซีย", "มาเลเซีย", "สิงคโปร์",
-                                    "ฟิลิปปินส์", "เวียดนาม", "พม่า", "กัมพูชา", "ลาว", "มองโกเลีย", "เกาหลีเหนือ",
-                                    "ไต้หวัน", "ฮ่องกง", "มาเก๊า", "นิวซีแลนด์", "ฟิจิ", "ปาปัวนิวกินี",
-                                    "หมู่เกาะโซโลมอน", "วานูอาตู", "นาอูรู", "ตูวาลู", "คิริบาส", "ไมโครนีเซีย",
-                                    "หมู่เกาะมาร์แชลล์", "ปาเลา", "ซามัว", "ตองกา", "นีวเวย์", "หมู่เกาะคุก",
-                                    "เฟรนช์โปลินีเซีย", "นิวแคลิโดเนีย", "วาลลิสและฟูตูนา",
-                                    "เฟรนช์เซาเทิร์นและแอนตาร์กติกแลนดส์", "เซนต์เฮเลนา", "อัสเซนชัน และตริสตันดากูนยา",
-                                    "หมู่เกาะฟอล์กแลนด์", "เซาท์จอร์เจียและหมู่เกาะเซาท์แซนด์วิช", "หมู่เกาะพิตแคร์น",
-                                    "บริติชอินเดียนโอเชียนเทร์ริทอรี", "หมู่เกาะบริติชเวอร์จิน", "หมู่เกาะเคย์แมน",
-                                    "มอนต์เซอร์รัต", "อังGuilla", "อารูบา", "กูราเซา", "ซินต์มาร์เติน", "โบแนร์",
-                                    "เซนต์เอิสตาเชียสและเซนต์มาร์เติน", "กรีนแลนด์", "หมู่เกาะแฟโร", "ยิบรอลตาร์",
-                                    "อากรีอาและบาร์บูดา", "แอนติกาและบาร์บูดา", "บาร์เบโดส", "ดอมินิกา", "เกรนาดา",
-                                    "เซนต์คิตส์และเนวิส", "เซนต์ลูเซีย", "เซนต์วินเซนต์และเกรนาดีนส์",
-                                    "ตรินิแดดและโตเบโก", "แองโกลา", "เบนิน", "บอตสวานา", "บูร์กินาฟาโซ", "บุรุนดี",
-                                    "กาบูเวร์ดี", "แคเมอรูน", "สาธารณรัฐแอฟริกากลาง", "ชาด", "สาธารณรัฐคองโก",
-                                    "สาธารณรัฐประชาธิปไตยคองโก", "โกตดิวัวร์", "จิบูตี", "อียิปต์", "อิเควทอเรียลกินี",
-                                    "เอริเทรีย", "เอสวาตินี", "เอธิโอเปีย", "กาบอง", "แกมเบีย", "กานา", "กินี",
-                                    "กินี-บิสเซา", "เคนยา", "เลโซโท", "ไลบีเรีย", "ลิเบีย", "มาดากัสการ์", "มาลาวี",
-                                    "มาลี", "มอริเตเนีย", "มอริเชียส", "โมร็อกโก", "โมซัมบิก", "นามิเบีย", "ไนเจอร์",
-                                    "ไนจีเรีย", "รวันดา", "เซาตูเมและปรินซิปี", "เซเนกัล", "เซเชลส์", "เซียร์ราลีโอน",
-                                    "โซมาเลีย", "แอฟริกาใต้", "ซูดานใต้", "ซูดาน", "แทนซาเนีย", "โตโก", "ตูนิเซีย",
-                                    "ยูกันดา", "แซมเบีย", "ซิมบับเว"])
-            category = st.selectbox("ประเภทอาหาร",
-                                    ["อาหารไทย", "อาหารญี่ปุ่น", "อาหารเกาหลี", "ฟาสต์ฟู้ด", "อาหารสุขภาพ", "อาหารจีน",
-                                    "อาหารอินเดีย", "อาหารเวียดนาม", "อาหารเม็กซิกัน", "อาหารอิตาเลียน", "อาหารทะเล",
-                                    "อาหารมังสวิรัติ", "อาหารเจ", "อาหารอีสาน", "อาหารใต้", "อาหารเหนือ",
-                                    "อาหารฟิวชั่น", "ขนม", "เครื่องดื่ม", "อาหารตะวันตก", "อาหารนานาชาติ"])
-        with col2:
-            taste = st.radio("รสชาติ", ["เผ็ด", "หวาน", "เค็ม", "เปรี้ยว", "ขม", "อูมามิ", "มัน", "ฝาด", "จืด", 'รสจัด',
-                                                'กลมกล่อม', 'กลางๆ'], horizontal=True)
-            budget = st.radio("งบประมาณ", ['ต่ำกว่า 100 บาท', '100 - 300 บาท', '300 - 1000 บาท', '1000 - 10000 บาท',
-                                                'ไม่จำกัดงบ(ระดับ MrBeast)'], horizontal=True)
-
-    if st.button("🔎 ค้นหาเมนู", use_container_width=True):
-        if st.session_state.loading == False:
-            st.session_state.loading = True
-            if budget == 'ไม่จำกัดงบ(ระดับ MrBeast)':
-                prompt = (f"ฉันต้องการซื้ออาหาร {category} รสชาติ {taste} ราคา 10000 -10000000 บาท {budget} ทีมีขายใน {country} "
-                            f"แนะนำ 3 ตัวเลือกเมนู {category} ที่มีขายใน {country} คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ บอกราคาของอาหารด้วย บอกด้วยว่าหาซื้อได้ที่ร้านไหน")
-                print('MrBeast') # Debugging line
-            else:
-                prompt = (f"ฉันต้องการซื้ออาหาร {category} รสชาติ {taste} ราคา {budget} ทีมีขายใน {country} "
-                            f"แนะนำ 3 ตัวเลือกเมนู {category} ที่มีขายใน {country} คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ บอกราคาของอาหารด้วย บอกด้วยว่าหาซื้อได้ที่ร้านไหน")
-            with st.spinner("กำลังค้นหาตัวเลือกที่ดีที่สุด... 3 เมนู"):
+    if st.button("🍳 สร้างเมนู", key="create_menu"):
+        if ingredients.strip():
+            prompt = (f"ฉันมี: {ingredients} เป็นวัตถุดิบหลัก "
+                      f"แนะนำเมนู {category} เวลาทำไม่เกิน {cook_time} นาที "
+                      f"ประมาณ {calories} kcal ระดับความยาก {difficulty} "
+                      f"พร้อมวิธีทำอย่างละเอียด เสนอ 3 ตัวเลือก คั่นด้วย '🍽️ เมนูที่' "
+                      f"ไม่ต้องเกริ่นนำ ถ้าวัตถุดิบที่มีขาดอะไรไปให้บอกด้วย และบอกจำนวนที่ต้องใช้อย่างละเอียด")
+            with st.spinner("กำลังสร้างสรรค์ไอเดียอร่อยๆ..."):
                 menu_list = process_menus(call_gemini_api(prompt))
-    
             if menu_list:
-                st.subheader("🧑‍🍳 เมนูแนะนำ 3 เมนู:")
+                st.markdown("<h3>🧑‍🍳 เมนูแนะนำ 3 เมนู:</h3>", unsafe_allow_html=True)
                 cols = st.columns(3)
                 for i, menu in enumerate(menu_list[:3]):
                     with cols[i]:
                         menu = format_menu_text(menu)
-                        st.markdown(
-                            f"<div class='menu-column'><h3>🍽️ เมนูที่ {i + 1}</h3><p class='menu-item'>{menu}</p></div>",
-                            unsafe_allow_html=True
-                            )
+                        st.markdown(f"""
+                        <div class="menu-column">
+                            <h4>🍽️ เมนูที่ {i+1}</h4>
+                            <p>{menu}</p>
+                        </div>
+                        """, unsafe_allow_html=True)
             else:
-                st.warning("⚠️ ไม่พบเมนู โปรดลองอีกครั้ง")
-            st.session_state.loading = False
+                st.warning("⚠️ ไม่พบเมนูที่ตรงกับเกณฑ์ของคุณ โปรดลองปรับการตั้งค่า")
         else:
-            st.session_state.loading = False
+            st.warning("⚠️ กรุณากรอกวัตถุดิบของคุณ")
 
+# --- ฟังก์ชันสำหรับโหมดค้นหาเมนูอาหาร ---
+def search_menu_mode():
+    st.subheader("✨ ค้นหาเมนูที่คุณน่าจะชอบ")
+    
+    with st.expander("⚙️ ตั้งค่าการค้นหา", expanded=True):
+        col1, col2 = st.columns(2)
+        with col1:
+            country = st.selectbox("ประเทศที่คุณอยู่ในตอนนี้",
+                                   ["ไทย", "ญี่ปุ่น", "เกาหลีใต้", "สหรัฐอเมริกา", "อังกฤษ", "ฝรั่งเศส",
+                                    "เยอรมนี", "จีน", "อินเดีย", "รัสเซีย", "แคนาดา", "บราซิล", "ออสเตรเลีย"])
+            category = st.selectbox("ประเภทอาหาร",
+                                    ["อาหารไทย", "อาหารญี่ปุ่น", "อาหารเกาหลี", "ฟาสต์ฟู้ด", "อาหารสุขภาพ",
+                                     "อาหารจีน", "อาหารอินเดีย", "อาหารเวียดนาม", "อาหารเม็กซิกัน",
+                                     "อาหารอิตาเลียน", "อาหารทะเล", "อาหารเจ", "อาหารอีสาน", "อาหารใต้",
+                                     "อาหารเหนือ", "อาหารฟิวชั่น", "ขนม", "เครื่องดื่ม", "อาหารตะวันตก"])
+        with col2:
+            taste = st.radio("รสชาติ", ["เผ็ด", "หวาน", "เค็ม", "เปรี้ยว", "ขม", "อูมามิ", "มัน", "ฝาด", "จืด", "รสจัด", "กลมกล่อม", "กลางๆ"], horizontal=True)
+            budget = st.radio("งบประมาณ", ["ต่ำกว่า 100 บาท", "100 - 300 บาท", "300 - 1000 บาท", "1000 - 10000 บาท", "ไม่จำกัดงบ(ระดับ MrBeast)"], horizontal=True)
+    
+    if st.button("🔎 ค้นหาเมนู", key="search_menu"):
+        if budget == "ไม่จำกัดงบ(ระดับ MrBeast)":
+            prompt = (f"ฉันต้องการซื้ออาหาร {category} รสชาติ {taste} ราคา 10000 - 10000000 บาท {budget} "
+                      f"ที่มีขายใน {country} แนะนำ 3 ตัวเลือกเมนู {category} ที่มีขายใน {country} "
+                      f"คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ บอกราคาของอาหารด้วย และบอกว่าหาซื้อได้ที่ร้านไหน")
+        else:
+            prompt = (f"ฉันต้องการซื้ออาหาร {category} รสชาติ {taste} ราคา {budget} "
+                      f"ที่มีขายใน {country} แนะนำ 3 ตัวเลือกเมนู {category} ที่มีขายใน {country} "
+                      f"คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ บอกราคาของอาหารด้วย และบอกว่าหาซื้อได้ที่ร้านไหน")
+        with st.spinner("กำลังค้นหาตัวเลือกที่ดีที่สุด..."):
+            menu_list = process_menus(call_gemini_api(prompt))
+        if menu_list:
+            st.markdown("<h3>🧑‍🍳 เมนูแนะนำ 3 เมนู:</h3>", unsafe_allow_html=True)
+            cols = st.columns(3)
+            for i, menu in enumerate(menu_list[:3]):
+                with cols[i]:
+                    menu = format_menu_text(menu)
+                    st.markdown(f"""
+                    <div class="menu-column">
+                        <h4>🍽️ เมนูที่ {i+1}</h4>
+                        <p>{menu}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+        else:
+            st.warning("⚠️ ไม่พบเมนู โปรดลองอีกครั้ง")
 
-
-# --- Conditional Display based on Selected Mode ---
-if st.session_state.mode == "create":
+# --- เรียกใช้งานแต่ละโหมดใน Tab ที่เหมาะสม ---
+with tabs[0]:
     create_menu_mode()
-elif st.session_state.mode == "search":
+with tabs[1]:
     search_menu_mode()
-
-
-# --- About Section ---
-st.markdown("---")
-if st.button("📜 เกี่ยวกับผู้พัฒนา", use_container_width=True):
-    with st.expander("🤝 พบกับทีมงาน", expanded=False):
-        st.markdown("""
-        <div class='about-section'>
-        <ul style='list-style: none; padding: 0; display: flex; flex-direction: column; align-items: center;'>
-
-        <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>นาย กัลปพฤกษ์ วิเชียรรัตน์ (คนแบกอิๆๆ😎)</li>
-        <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 3</em></li>
-        <img src='https://media-hosting.imagekit.io//1b3ed8f3573a4e71/IMG_20241011_135949_649.webp?Expires=1833623214&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=XkV2~CAZ1JL5DLoYHTK43-DH1HSmbcpRfZqqgUbS~YZHNtsgvL-UkoVf9iDz8-pZKNYsLqdyFOahcMiuMR1ao1FQiu3I2iqWiSmsoBiHOfr3OxBObD32WF30wS6NTbMCg7MmWPKCratj29lGI0fhN~33HlEnQ50hMnDRnH9CKvwY3tOWxM2sTNcwZ5J1Q1nP5wCAUwCCFaeNxJwFxCWLBdR268qhrfTxu9-pgodzqM1~Jv0bj3UTjx2i7IMm7eLjfU14x4aE9HUjTKrgvzsadlHSzJgYIyhQvetbRsEVPeIiiIz9aMo3YzK-JCz3CPMnoU-7aBLe5yLmVOEeHvMTIQ__' width='250px' style='border-radius: 10%; margin-bottom: 20px;'>
-
-        <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>นาย ธีราธร มุกดาเพชรรัตน์ (ผู้ช่วย No.1)</li>
-        <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 13</em></li>
-        <img src='https://media-hosting.imagekit.io//794cd2dd43b24aff/perth_tm2025_02_08_18_38_478aae62c6-a109-49ec-aef1-8152096b5149.jpg?Expires=1833622873&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=u9sNP10b88y78jCRRUyLwn3OeHhsL7C0QbvaOcjCmOSGCD69RWN6e08aV19Se-7mknqcTF~zU9~snvhpFExvNR9jMhDubAePljCWIhBzzbpsRsOQ5akdEMa9AXVUOuXIzFN-igpqs-g9t8y~TqJ6mOO7daYkGa~L6Pnp3~G47pI3yWS5DVZ5hXcSHK7GQmupabIkfaaM-67FPYu7wF96vGlfatkSqA5zzIUGeX0yc~3kzI7dlCzqzqaXRKng6upQ07299g0LwFv3LBRO22VffO1fZr82TxnXUdEPcfmci-esT9LH6JEKwRET2fRLklG~qBRLc8wnzS0RdyrYjXRhEA__' width='250px' style='border-radius: 50%; margin-bottom: 20px;'>
-
-        <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>นาย อภิวิชญ์ อดุลธรรมวิทย์ (ผู้ช่วย No.2)</li>
-        <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 28</em></li>
-        <img src='https://media-hosting.imagekit.io//e3962c8e8fa84567/513%2028.jpg?Expires=1833636651&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=IApvPc310iSHh~zIvIWoOHb-ABMcnPIPUmVAfVKHMQAz66kE1hCxbPUEWQNAIiekpZ1oDq9Nf8rmJ18AlAFtxzRAEOVGCXV1UWgz79A7kCvHHMbV1MnsOD2ZfY60ApLE-FRccfbKP3nLjaGZkcR3YA2ynywJVFHHau6MMA6mTUvy41nTWtRi9EDNP2Pbkxpr7hemhzcbtanbqtASvUHfWHspP5WXgJOXxq-TgoMYJudxvJbUsyp1Kg0WV1TOmo91xMgs5DC14xVXaE9lJ6NwfIG3zvoLehDiIXpYrGaI~nG~KUGXQJK~1st7lCdnkoLrCQhXJ55pGIOeIspbRj0LDQ__' width='250px' style='border-radius: 50%; margin-bottom: 20px;'>
-
-        <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>นาย ปัณณวิชญ์ หลีกภัย</li>
-        <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 29</em></li>
-        <img src='https://media-hosting.imagekit.io//a39b45568dc14fab/IMG_20250208_223334.jpg?Expires=1833637018&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=M2tJAPHXihMl1OUnwNiEBpEggLW-AZag9HFNkFb51KiIR6AGcdJkV0ovnL0DfgAx8WV7-vc65vXWLKNZWoB4vzXob5AYUfwmT9XcgJ1egfOuS3B95GNj-y3maPQ7nm2iW3Yv~Zd5HfeL~D2tZu8CdiJUdFj3bB4x22uceD6zVNP8FHAuMS5qcaDTwUQgoV9RQvKQFOLjsX9JX7ZQ6olCkXmdIXM31uDSwok1Vpru12aC3p16whyHG2iJ2s1iTROwcJurWM9F-R90NCjP63ZGEa0gdrKgHC6WvKeGSmkehKsqpQv7fL3i7dXpTSV-Z-mVVh72OcJfNr1W~WRZwIjMDQ__' width='250px' style='border-radius: 50%;'>
+with tabs[2]:
+    st.subheader("🤝 เกี่ยวกับผู้พัฒนา")
+    st.markdown("""
+    <div class="card">
+        <h4>ทีมงานพัฒนา</h4>
+        <ul>
+            <li><b>นาย กัลปพฤกษ์ วิเชียรรัตน์</b> (คนแบกอิๆๆ 😎)</li>
+            <li><b>นาย ธีราธร มุกดาเพชรรัตน์</b> (ผู้ช่วย No.1)</li>
+            <li><b>นาย อภิวิชญ์ อดุลธรรมวิทย์</b> (ผู้ช่วย No.2)</li>
+            <li><b>นาย ปัณณวิชญ์ หลีกภัย</b></li>
         </ul>
-        </div>
-        """, unsafe_allow_html=True)
+    </div>
+    """, unsafe_allow_html=True)
 
-# --- Admin Panel to Reset Visitor Count ---
-st.markdown("---")
-st.subheader("🔧 Admin Panel (เดาไปก็เท่านั้น)")
-admin_password = st.text_input("Enter Admin Password:", type="password")
-if admin_password == st.secrets["ADMIN_PASSWORD"]:
-    if st.button("Reset Visitor Count and Active Users"):
-        with open(COUNTER_FILE, "w") as f:
-            f.write("0")
-        with open(ACTIVE_USERS_FILE, "w") as f:
-            f.truncate(0)
-        st.success("Visitor count and active users reset to 0.")
-        st.rerun()  # Force a page reload to reflect the changes immediately
+# --- Admin Panel ใน Sidebar ---
+with st.sidebar:
+    st.markdown("### 🔧 Admin Panel")
+    admin_password = st.text_input("Enter Admin Password:", type="password")
+    if admin_password == st.secrets["ADMIN_PASSWORD"]:
+        if st.button("Reset Visitor Count and Active Users"):
+            with open(COUNTER_FILE, "w") as f:
+                f.write("0")
+            with open(ACTIVE_USERS_FILE, "w") as f:
+                f.truncate(0)
+            st.success("Visitor count and active users reset to 0.")
+            st.experimental_rerun()
         
-    # --- View File Contents ---
-    st.subheader("📂 View Stored Data")
-    def read_file_content(file_path):
-        try:
-            with open(file_path, "r") as f:
-                content = f.read().strip()
-                return content if content else "(Empty File)"
-        except FileNotFoundError:
-            return "(File Not Found)"
-
-    if st.button("View Visitor Count File"):
-        st.text_area("Visitor Count File Content:", read_file_content(COUNTER_FILE), height=70)
-
-    if st.button("View Active Users File"):
-        st.text_area("Active Users File Content:", read_file_content(ACTIVE_USERS_FILE), height=100)
-else:
-  if admin_password != "":  # Only show the warning if the user *tried* to enter a password
-      st.warning("Incorrect password or unauthorized access.")
+        st.markdown("#### 📂 View Stored Data")
+        def read_file_content(file_path):
+            try:
+                with open(file_path, "r") as f:
+                    content = f.read().strip()
+                    return content if content else "(Empty File)"
+            except FileNotFoundError:
+                return "(File Not Found)"
+        if st.button("View Visitor Count File"):
+            st.text_area("Visitor Count File Content:", read_file_content(COUNTER_FILE), height=70)
+        if st.button("View Active Users File"):
+            st.text_area("Active Users File Content:", read_file_content(ACTIVE_USERS_FILE), height=100)
+    else:
+        if admin_password != "":
+            st.warning("Incorrect password or unauthorized access.")
