@@ -347,6 +347,8 @@ body {
 </style>
 """, unsafe_allow_html=True)
 
+loading = false
+
 # --- Increment Visitor Count and Update Active Users ---
 visitor_count = increment_visitor_count()
 update_active_user()
@@ -406,9 +408,9 @@ def create_menu_mode():
             cook_time = st.slider("เวลาทำอาหาร (นาที)", 5, 180, 30, step=5)
 
     if st.button("🍳 สร้างเมนู", use_container_width=True):
-        if st.session_state["loading"] == true:
+        if loading == false:
             if ingredients:
-                st.session_state["loading"] = True
+                loading = True
                 prompt = (f"ฉันมี: {ingredients} เป็นวัตถุดิบหลัก "
                             f"แนะนำเมนู {category} เวลาทำไม่เกิน {cook_time} นาที "
                             f"ประมาณ {calories} kcal ระดับความยาก ระดับ{difficulty} "
@@ -430,7 +432,7 @@ def create_menu_mode():
                                 )            
                 else:
                     st.warning("⚠️ ไม่พบเมนูที่ตรงกับเกณฑ์ของคุณ โปรดลองปรับการตั้งค่า")
-                st.session_state["loading"] = False
+                loading = False
             else:
                 st.warning("⚠️ กรุณากรอกวัตถุดิบของคุณ")
 
@@ -481,8 +483,8 @@ def search_menu_mode():
                                                 'ไม่จำกัดงบ(ระดับ MrBeast)'], horizontal=True)
 
     if st.button("🔎 ค้นหาเมนู", use_container_width=True):
-        if st.session_state["loading"] == true:
-            st.session_state["loading"] = true
+        if loading == false:
+            loading = true
             if budget == 'ไม่จำกัดงบ(ระดับ MrBeast)':
                 prompt = (f"ฉันต้องการซื้ออาหาร {category} รสชาติ {taste} ราคา 10000 -10000000 บาท {budget} ทีมีขายใน {country} "
                             f"แนะนำ 3 ตัวเลือกเมนู {category} ที่มีขายใน {country} คั่นด้วย '🍽️ เมนูที่' ไม่ต้องเกริ่นนำ บอกราคาของอาหารด้วย บอกด้วยว่าหาซื้อได้ที่ร้านไหน")
@@ -505,7 +507,7 @@ def search_menu_mode():
                             )
             else:
                 st.warning("⚠️ ไม่พบเมนู โปรดลองอีกครั้ง")
-            st.session_state["loading"] = false
+            loading = false
 
 
 
