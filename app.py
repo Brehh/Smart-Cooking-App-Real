@@ -375,7 +375,11 @@ with st.container(border=True):
             if st.button("🔍 ค้นหารายการอาหาร", key="search_mode",  type="primary" if st.session_state.mode == "search" else "secondary", use_container_width=True):
                 st.session_state.mode = "search"
 
-
+def format_menu_text(menu):
+    """Fix bold formatting and replace markdown asterisks with HTML bold tags."""
+    menu = menu.replace("**", "<b>", 1).replace("**", "</b>", 1)  # Ensure balanced bold tags
+    menu = menu.replace("*", "<b>", 1).replace("*", "</b>", 1)
+    return menu
 
 # --- Function Definitions for Each Mode ---
 def create_menu_mode():
@@ -416,7 +420,7 @@ def create_menu_mode():
                 for i, menu in enumerate(menu_list[:3]):
                     with cols[i]:
                         # Convert Markdown **bold** to HTML <b> tags
-                        menu = menu.replace("**", "<b>").replace("**", "</b>")
+                        menu = format_menu_text(menu)
                         st.markdown(
                             f"<div class='menu-column'><h3>🍽️ เมนูที่ {i + 1}</h3><p class='menu-item'>{menu}</p></div>",
                             unsafe_allow_html=True
@@ -489,8 +493,7 @@ def search_menu_mode():
             cols = st.columns(3)
             for i, menu in enumerate(menu_list[:3]):
                 with cols[i]:
-                    menu = menu.replace("**", "<b>").replace("**", "</b>")
-                    menu = menu.replace("*", "<b>").replace("*", "</b>")# Convert **text** to <b>text</b>
+                    menu = format_menu_text(menu)
                     st.markdown(
                         f"<div class='menu-column'><h3>🍽️ เมนูที่ {i + 1}</h3><p class='menu-item'>{menu}</p></div>",
                         unsafe_allow_html=True
