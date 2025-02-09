@@ -116,7 +116,7 @@ def format_menu_text(menu):
     menu = menu.replace("*", "<b>", 1).replace("*", "</b>", 1)
     return menu
 
-# --- Custom CSS สำหรับดีไซน์ที่มีสีสันและทันสมัย ---
+# --- Custom CSS สำหรับโทนสีเขียวและดีไซน์ที่ทันสมัย ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
@@ -127,9 +127,9 @@ body {
     padding: 0;
 }
 
-/* Header แบบ Gradient */
+/* Header แบบ Gradient สีเขียว */
 .header {
-    background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    background: linear-gradient(90deg, #34d058, #28a745);
     padding: 20px;
     border-bottom: 2px solid #dee2e6;
     text-align: center;
@@ -171,10 +171,10 @@ body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 .menu-column h4 {
-    color: #ff7e5f;
+    color: #28a745;
 }
 
-/* ปุ่มหลัก */
+/* ปุ่มหลัก สีเขียว */
 .button-primary {
     background-color: #28a745;
     color: #fff;
