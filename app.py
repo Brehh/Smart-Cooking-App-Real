@@ -116,64 +116,65 @@ def format_menu_text(menu):
     menu = menu.replace("*", "<b>", 1).replace("*", "</b>", 1)
     return menu
 
-# --- Custom CSS สำหรับดีไซน์ที่ทันสมัย ---
+# --- Custom CSS สำหรับดีไซน์ที่มีสีสันและทันสมัย ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
 body {
     font-family: 'Kanit', sans-serif;
-    background-color: #f8f9fa;
+    background-color: #f0f4f8;
     margin: 0;
     padding: 0;
 }
+
+/* Header แบบ Gradient */
 .header {
-    background-color: #ffffff;
+    background: linear-gradient(90deg, #ff7e5f, #feb47b);
     padding: 20px;
     border-bottom: 2px solid #dee2e6;
     text-align: center;
     margin-bottom: 20px;
 }
-/* ปรับขนาดของหัวข้อแอปให้เหมาะกับหน้าจอ desktop */
 .header h1 {
     font-size: 3rem;
     margin: 0;
-    color: #343a40;
+    color: #ffffff;
 }
-/* Media Query สำหรับหน้าจอมือถือ */
 @media (max-width: 768px) {
     .header h1 {
-        font-size: 2rem; /* ลดขนาดตัวอักษร */
-        margin: 0 10px;  /* เพิ่มระยะขอบด้านซ้าย-ขวา */
-        word-wrap: break-word; /* ห่อคำหากมีความยาวเกิน */
+        font-size: 2rem;
+        margin: 0 10px;
+        word-wrap: break-word;
     }
 }
 .visitor-info {
     font-size: 1.2rem;
-    color: #666;
+    color: #fefefe;
 }
-.card {
+
+/* Card styling สำหรับเนื้อหาต่างๆ */
+.card, .menu-column {
     background-color: #ffffff;
-    border: 1px solid #dee2e6;
+    border: 1px solid #d1e0e0;
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+
+/* ปรับสีและ hover effect สำหรับเมนู */
 .menu-column {
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .menu-column:hover {
     transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 .menu-column h4 {
-    color: #28a745;
+    color: #ff7e5f;
 }
+
+/* ปุ่มหลัก */
 .button-primary {
     background-color: #28a745;
     color: #fff;
