@@ -11,7 +11,7 @@ st.set_page_config(
     page_title="🍽️ Smart Cooking App 😎",
     page_icon="🍳",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 # --- File-based persistence สำหรับ Visitor Count และ Active Users ---
@@ -133,10 +133,19 @@ body {
     text-align: center;
     margin-bottom: 20px;
 }
+/* ปรับขนาดของหัวข้อแอปให้เหมาะกับหน้าจอ desktop */
 .header h1 {
     font-size: 3rem;
     margin: 0;
     color: #343a40;
+}
+/* Media Query สำหรับหน้าจอมือถือ */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2rem; /* ลดขนาดตัวอักษร */
+        margin: 0 10px;  /* เพิ่มระยะขอบด้านซ้าย-ขวา */
+        word-wrap: break-word; /* ห่อคำหากมีความยาวเกิน */
+    }
 }
 .visitor-info {
     font-size: 1.2rem;
