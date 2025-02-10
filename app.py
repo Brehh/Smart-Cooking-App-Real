@@ -349,13 +349,21 @@ with tabs[2]:
     <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 28</em></li>
     <img src='https://media-hosting.imagekit.io//e3962c8e8fa84567/513%2028.jpg?Expires=1833636651&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=IApvPc310iSHh~zIvIWoOHb-ABMcnPIPUmVAfVKHMQAz66kE1hCxbPUEWQNAIiekpZ1oDq9Nf8rmJ18AlAFtxzRAEOVGCXV1UWgz79A7kCvHHMbV1MnsOD2ZfY60ApLE-FRccfbKP3nLjaGZkcR3YA2ynywJVFHHau6MMA6mTUvy41nTWtRi9EDNP2Pbkxpr7hemhzcbtanbqtASvUHfWHspP5WXgJOXxq-TgoMYJudxvJbUsyp1Kg0WV1TOmo91xMgs5DC14xVXaE9lJ6NwfIG3zvoLehDiIXpYrGaI~nG~KUGXQJK~1st7lCdnkoLrCQhXJ55pGIOeIspbRj0LDQ__' width='250px' style='border-radius: 50%; margin-bottom: 20px;'>
 
-    <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>4. นาย ปัณณวิชญ์ หลีกภัย (ผู้ให้กำลังใจ No.1)❤️</li>
+    <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>4. นาย ปัณณวิชญ์ หลีกภัย (ผู้ให้กำลังใจ No.1) ❤️</li>
     <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 29</em></li>
     <img src='https://media-hosting.imagekit.io//a39b45568dc14fab/IMG_20250208_223334.jpg?Expires=1833637018&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=M2tJAPHXihMl1OUnwNiEBpEggLW-AZag9HFNkFb51KiIR6AGcdJkV0ovnL0DfgAx8WV7-vc65vXWLKNZWoB4vzXob5AYUfwmT9XcgJ1egfOuS3B95GNj-y3maPQ7nm2iW3Yv~Zd5HfeL~D2tZu8CdiJUdFj3bB4x22uceD6zVNP8FHAuMS5qcaDTwUQgoV9RQvKQFOLjsX9JX7ZQ6olCkXmdIXM31uDSwok1Vpru12aC3p16whyHG2iJ2s1iTROwcJurWM9F-R90NCjP63ZGEa0gdrKgHC6WvKeGSmkehKsqpQv7fL3i7dXpTSV-Z-mVVh72OcJfNr1W~WRZwIjMDQ__' width='250px' style='border-radius: 50%;'>
     
     <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>ผู้สนับสนุนหลักอย่างเป็นทางการ นาย กัมปนาท วิงศ์นิล 💸</li>
     <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 2</em></li>
     <img src='https://media-hosting.imagekit.io//837cf942a66647d2/IMG_20250210_093634_725.jpg?Expires=1833763010&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=hMnGTb~aH92~CMwvEzF3MvPvZMvx7~~Q0K3AN8FM1eqmP9Uig6pfbdFWwjkWCeiQ3FtGroJoxnhkjpkq3Gh7zexKWmt8OECLM0v67kS07PMToUTXo-XQFxci8QBQDFhEajiyujsjRd8ml1DJ5YvvVyVysUs4M3nTz2ql8tM6aSr0QlomEVvj6ScY6ILRRNNC80-vfVAy-PJvSxrCJlLIJyJ1dj0ooTCfEm80i8Xo8swprfzbvU09IUKMJo-dkluzQ0d900w8foAdnkPbKsiL~8OOLoSvqn7oAVVM9~1iJR1HS38Uq0Oj8XeY4RUuIuflc7sAVnHIc8H7LKjxic-MTQ__' width='250px' style='border-radius: 30%;'>
+
+    <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>นาย พศิน บัวขาว (ผู้ให้กำลังใจ No.2) ❤️</li>
+    <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 16</em></li>
+    <img src='https://media-hosting.imagekit.io//719f58393f2140f9/IMG_20250210_094818_282.jpg?Expires=1833763711&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=TQw2b4U4PySIlnic3iogMix5uLyG8F-jHo4lWOhg-HMaiQP9IUcfvHMG6nqJc4QEn6yuaMEUV8n83gytPrZpOxcS7PVRCqMs9QLGc55ovaHmVsp-KdV4tfxRYEdWxN74sVDh~lfY8HPHzF-TyUF7yNvsyTEkPaa4qq7VOmTmM0ZhMjk4HS~L113iGXD3NDN3TcGGHHrAVaMWvNgmE2l0yXmb1y7N3AQFQqsads4LX6~VAkxQ~VWeO2HO9fD5cCfg3MPW5582wxFC4e3MsNN-HxocWU6BWd8PrFzoRYv4JAsNSZpr0TytB2n0Y9rkerw7TOfLp9ChOp6lMkFtyCPa2g__' width='250px' style='border-radius: 30%;'>
+
+    <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>ราชาแห่งความมืด ภณพล ช่วยบุญส่ง (ผู้ให้กำลังใจ No.3) ❤️</li>
+    <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 19</em></li>
+    <img src='https://media-hosting.imagekit.io//eb488525d19649d6/IMG_20250210_094906_954.jpg?Expires=1833763753&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=K~yTUb67lRcde28XARVZJcRYqNSbZchdvb4AnELnqQApXZmvrIsLQhHD3h~cwn-Ja4vvWbTMl-bigHQq5InbOJG7fCZ7Vb2di3TV-QfIrlWqEL1Q1isoxJYrbRw5uKS1mvOJe5frC~fw1ayI7BKIVM55eFOtQloSRP3Z33~w1Vu2rrHNplg~K~8pmQ3z2gieCgFlviQjO6qRT33kMbk6OmQ13TkNFdmpOURd2-Jhla0kUcqpfB-qtL73HLrcZlJ92t788RaRVlPkxzV3FM0Q0RNIdC18YcWYV~dyJ57-SOkzGRZ9dfIeChapNO2algpo-AIkjPmaGOIQXfUm8JXCcg__' width='250px' style='border-radius: 30%;'>
     
     </ul>
     </div>
