@@ -114,6 +114,7 @@ def format_menu_text(menu):
     # แปลง **bold** หรือ *bold* เป็น HTML <b> tag
     menu = menu.replace("**", "<b>", 1).replace("**", "</b>", 1)
     menu = menu.replace("*", "<b>", 1).replace("*", "</b>", 1)
+    menu = menu.replace("*", "<b>", 1).replace("*", "</b>", 1)
     return menu
 
 # --- Custom CSS สำหรับโทนสีเขียวและดีไซน์ที่ทันสมัย ---
