@@ -349,7 +349,7 @@ with tabs[2]:
     <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 28</em></li>
     <img src='https://media-hosting.imagekit.io//e3962c8e8fa84567/513%2028.jpg?Expires=1833636651&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=IApvPc310iSHh~zIvIWoOHb-ABMcnPIPUmVAfVKHMQAz66kE1hCxbPUEWQNAIiekpZ1oDq9Nf8rmJ18AlAFtxzRAEOVGCXV1UWgz79A7kCvHHMbV1MnsOD2ZfY60ApLE-FRccfbKP3nLjaGZkcR3YA2ynywJVFHHau6MMA6mTUvy41nTWtRi9EDNP2Pbkxpr7hemhzcbtanbqtASvUHfWHspP5WXgJOXxq-TgoMYJudxvJbUsyp1Kg0WV1TOmo91xMgs5DC14xVXaE9lJ6NwfIG3zvoLehDiIXpYrGaI~nG~KUGXQJK~1st7lCdnkoLrCQhXJ55pGIOeIspbRj0LDQ__' width='250px' style='border-radius: 50%; margin-bottom: 20px;'>
 
-    <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>4. นาย ปัณณวิชญ์ หลีกภัย (ผู้ให้กำลังใจ 1)❤️</li>
+    <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>4. นาย ปัณณวิชญ์ หลีกภัย (ผู้ให้กำลังใจ No.1)❤️</li>
     <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 29</em></li>
     <img src='https://media-hosting.imagekit.io//a39b45568dc14fab/IMG_20250208_223334.jpg?Expires=1833637018&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=M2tJAPHXihMl1OUnwNiEBpEggLW-AZag9HFNkFb51KiIR6AGcdJkV0ovnL0DfgAx8WV7-vc65vXWLKNZWoB4vzXob5AYUfwmT9XcgJ1egfOuS3B95GNj-y3maPQ7nm2iW3Yv~Zd5HfeL~D2tZu8CdiJUdFj3bB4x22uceD6zVNP8FHAuMS5qcaDTwUQgoV9RQvKQFOLjsX9JX7ZQ6olCkXmdIXM31uDSwok1Vpru12aC3p16whyHG2iJ2s1iTROwcJurWM9F-R90NCjP63ZGEa0gdrKgHC6WvKeGSmkehKsqpQv7fL3i7dXpTSV-Z-mVVh72OcJfNr1W~WRZwIjMDQ__' width='250px' style='border-radius: 50%;'>
     
