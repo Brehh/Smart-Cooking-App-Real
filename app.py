@@ -353,7 +353,7 @@ with tabs[2]:
     <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 29</em></li>
     <img src='https://media-hosting.imagekit.io//a39b45568dc14fab/IMG_20250208_223334.jpg?Expires=1833637018&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=M2tJAPHXihMl1OUnwNiEBpEggLW-AZag9HFNkFb51KiIR6AGcdJkV0ovnL0DfgAx8WV7-vc65vXWLKNZWoB4vzXob5AYUfwmT9XcgJ1egfOuS3B95GNj-y3maPQ7nm2iW3Yv~Zd5HfeL~D2tZu8CdiJUdFj3bB4x22uceD6zVNP8FHAuMS5qcaDTwUQgoV9RQvKQFOLjsX9JX7ZQ6olCkXmdIXM31uDSwok1Vpru12aC3p16whyHG2iJ2s1iTROwcJurWM9F-R90NCjP63ZGEa0gdrKgHC6WvKeGSmkehKsqpQv7fL3i7dXpTSV-Z-mVVh72OcJfNr1W~WRZwIjMDQ__' width='250px' style='border-radius: 50%;'>
     
-    <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>ผู้สนับสนุนหลักอย่างเป็นทางการ นาย กัมปนาท วิงศ์นิล 💸</li>
+    <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>ผู้สนับสนุนหลักอย่างเป็นทางการ นาย กัมปนาท วงศ์นิล 💸</li>
     <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 2</em></li>
     <img src='https://media-hosting.imagekit.io//837cf942a66647d2/IMG_20250210_093634_725.jpg?Expires=1833763010&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=hMnGTb~aH92~CMwvEzF3MvPvZMvx7~~Q0K3AN8FM1eqmP9Uig6pfbdFWwjkWCeiQ3FtGroJoxnhkjpkq3Gh7zexKWmt8OECLM0v67kS07PMToUTXo-XQFxci8QBQDFhEajiyujsjRd8ml1DJ5YvvVyVysUs4M3nTz2ql8tM6aSr0QlomEVvj6ScY6ILRRNNC80-vfVAy-PJvSxrCJlLIJyJ1dj0ooTCfEm80i8Xo8swprfzbvU09IUKMJo-dkluzQ0d900w8foAdnkPbKsiL~8OOLoSvqn7oAVVM9~1iJR1HS38Uq0Oj8XeY4RUuIuflc7sAVnHIc8H7LKjxic-MTQ__' width='250px' style='border-radius: 30%;'>
 
