@@ -337,7 +337,7 @@ with tabs[2]:
     <div class='about-section'>
     <ul style='list-style: none; padding: 0; display: flex; flex-direction: column; align-items: center;'>
 
-    <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>1. นาย กัลปพฤกษ์ วิเชียรรัตน์ (คนแบกอิๆๆ😎)</li>
+    <li style='font-size: 1.6rem; font-weight: bold; margin-top: 10px;'>1. นาย กัลปพฤกษ์ วิเชียรรัตน์ (คนแบกอิๆๆ😎) - ประธานเว็บไซต์</li>
     <li style='font-size: 1.3rem;'><em>ชั้น 6/13 เลขที่ 3</em></li>
     <img src='https://media-hosting.imagekit.io//1b3ed8f3573a4e71/IMG_20241011_135949_649.webp?Expires=1833623214&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=XkV2~CAZ1JL5DLoYHTK43-DH1HSmbcpRfZqqgUbS~YZHNtsgvL-UkoVf9iDz8-pZKNYsLqdyFOahcMiuMR1ao1FQiu3I2iqWiSmsoBiHOfr3OxBObD32WF30wS6NTbMCg7MmWPKCratj29lGI0fhN~33HlEnQ50hMnDRnH9CKvwY3tOWxM2sTNcwZ5J1Q1nP5wCAUwCCFaeNxJwFxCWLBdR268qhrfTxu9-pgodzqM1~Jv0bj3UTjx2i7IMm7eLjfU14x4aE9HUjTKrgvzsadlHSzJgYIyhQvetbRsEVPeIiiIz9aMo3YzK-JCz3CPMnoU-7aBLe5yLmVOEeHvMTIQ__' width='250px' style='border-radius: 10%; margin-bottom: 20px;'>
 
